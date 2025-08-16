@@ -15,114 +15,184 @@ const trendingPosts = allPosts.slice(0, 6);
     <!-- Section Header -->
     <div class="flex items-center justify-between mb-12">
       <div>
-        <h2 class="text-3xl lg:text-4xl font-bold mb-2" style="color: var(--text-primary); font-family: var(--font-heading);">
+        <h2
+          class="text-3xl lg:text-4xl font-bold mb-2"
+          style="color: var(--text-primary); font-family: var(--font-heading);"
+        >
           🔥 Trending Tools
         </h2>
         <p class="text-lg" style="color: var(--text-secondary);">
           Most popular marketing tools this month
         </p>
       </div>
-      <a 
-        href="/blog" 
+      <a
+        href="/blog"
         class="hidden md:flex items-center gap-2 px-6 py-3 rounded-full font-semibold transition-all duration-300 hover:-translate-y-1"
         style="background: var(--color-primary); color: white;"
         onmouseover="this.style.backgroundColor='var(--color-primary-dark)'"
         onmouseout="this.style.backgroundColor='var(--color-primary)'"
       >
         <span>View All</span>
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+        <svg
+          class="w-4 h-4"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
         </svg>
       </a>
     </div>
 
     <!-- Trending Tools Grid -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {trendingPosts.map((post, index) => {
-        const trendingNumbers = ['#1', '#2', '#3', '#4', '#5', '#6'];
-        const categories = ['EMAIL', 'FUNNEL', 'LANDING', 'CRM', 'ANALYTICS', 'AUTOMATION'];
-        
-        return (
-          <article class="group relative rounded-xl overflow-hidden transition-all duration-300 hover:shadow-lg" style="background: var(--surface-card); border: 1px solid var(--border-light);">
-            <a href={`/blog/${post.id}`} class="block p-6">
-              {/* Trending Number */}
-              <div class="flex items-center justify-between mb-4">
-                <span 
-                  class="text-2xl font-black"
-                  style="color: var(--color-primary);"
-                >
-                  {trendingNumbers[index]}
-                </span>
-                <span 
-                  class="px-2 py-1 text-xs font-bold uppercase tracking-wider rounded text-white"
-                  style="background: var(--color-secondary);"
-                >
-                  {categories[index]}
-                </span>
-              </div>
+      {
+        trendingPosts.map((post, index) => {
+          const trendingNumbers = ["#1", "#2", "#3", "#4", "#5", "#6"];
+          const categories = [
+            "EMAIL",
+            "FUNNEL",
+            "LANDING",
+            "CRM",
+            "ANALYTICS",
+            "AUTOMATION",
+          ];
 
-              {/* Tool Image */}
-              <div class="aspect-[16/9] rounded-lg overflow-hidden mb-4">
-                {post.data.image?.url ? (
-                  <img
-                    src={post.data.image.url}
-                    alt={post.data.image.alt || post.data.title}
-                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    loading="lazy"
-                  />
-                ) : (
-                  <div class="w-full h-full flex items-center justify-center" style="background: var(--bg-tertiary);">
-                    <svg class="w-12 h-12" style="color: var(--text-muted);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+          return (
+            <article
+              class="group relative rounded-xl overflow-hidden transition-all duration-300 hover:shadow-lg"
+              style="background: var(--surface-card); border: 1px solid var(--border-light);"
+            >
+              <a href={`/blog/${post.id}`} class="block p-6">
+                {/* Trending Number */}
+                <div class="flex items-center justify-between mb-4">
+                  <span
+                    class="text-2xl font-black"
+                    style="color: var(--color-primary);"
+                  >
+                    {trendingNumbers[index]}
+                  </span>
+                  <span
+                    class="px-2 py-1 text-xs font-bold uppercase tracking-wider rounded text-white"
+                    style="background: var(--color-secondary);"
+                  >
+                    {categories[index]}
+                  </span>
+                </div>
+
+                {/* Tool Image */}
+                <div class="aspect-[16/9] rounded-lg overflow-hidden mb-4">
+                  {post.data.image?.url ? (
+                    <img
+                      src={post.data.image.url}
+                      alt={post.data.image.alt || post.data.title}
+                      class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      loading="lazy"
+                    />
+                  ) : (
+                    <div
+                      class="w-full h-full flex items-center justify-center"
+                      style="background: var(--bg-tertiary);"
+                    >
+                      <svg
+                        class="w-12 h-12"
+                        style="color: var(--text-muted);"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M13 10V3L4 14h7v7l9-11h-7z"
+                        />
+                      </svg>
+                    </div>
+                  )}
+                </div>
+
+                {/* Tool Info */}
+                <h3
+                  class="text-lg font-bold leading-tight mb-2 line-clamp-2 transition-colors duration-300"
+                  style="color: var(--text-primary); font-family: var(--font-heading);"
+                  onmouseover="this.style.color='var(--color-primary)'"
+                  onmouseout="this.style.color='var(--text-primary)'"
+                >
+                  {post.data.title}
+                </h3>
+
+                {/* Quick Stats */}
+                <div
+                  class="flex items-center justify-between text-sm"
+                  style="color: var(--text-muted);"
+                >
+                  <div class="flex items-center gap-1">
+                    <svg
+                      class="w-4 h-4"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                      />
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                      />
                     </svg>
+                    <span>2.3k views</span>
                   </div>
-                )}
-              </div>
-
-              {/* Tool Info */}
-              <h3 
-                class="text-lg font-bold leading-tight mb-2 line-clamp-2 transition-colors duration-300"
-                style="color: var(--text-primary); font-family: var(--font-heading);"
-                onmouseover="this.style.color='var(--color-primary)'"
-                onmouseout="this.style.color='var(--text-primary)'"
-              >
-                {post.data.title}
-              </h3>
-
-              {/* Quick Stats */}
-              <div class="flex items-center justify-between text-sm" style="color: var(--text-muted);">
-                <div class="flex items-center gap-1">
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
-                  </svg>
-                  <span>2.3k views</span>
+                  <div class="flex items-center gap-1">
+                    <svg
+                      class="w-4 h-4"
+                      style="color: var(--color-accent);"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                    <span>4.{Math.floor(Math.random() * 9) + 1}</span>
+                  </div>
                 </div>
-                <div class="flex items-center gap-1">
-                  <svg class="w-4 h-4" style="color: var(--color-accent);" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                  </svg>
-                  <span>4.{Math.floor(Math.random() * 9) + 1}</span>
-                </div>
-              </div>
-            </a>
-          </article>
-        );
-      })}
+              </a>
+            </article>
+          );
+        })
+      }
     </div>
 
     <!-- Mobile View All Button -->
     <div class="md:hidden text-center mt-8">
-      <a 
-        href="/blog" 
+      <a
+        href="/blog"
         class="inline-flex items-center gap-2 px-6 py-3 rounded-full font-semibold transition-all duration-300"
         style="background: var(--color-primary); color: white;"
         onmouseover="this.style.backgroundColor='var(--color-primary-dark)'"
         onmouseout="this.style.backgroundColor='var(--color-primary)'"
       >
         <span>View All Tools</span>
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+        <svg
+          class="w-4 h-4"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
         </svg>
       </a>
     </div>

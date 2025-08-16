@@ -1,0 +1,198 @@
+---
+/**
+ * Design System Showcase - Demonstrates Next Level Features
+ * Shows off the new advanced design tokens and components
+ */
+---
+
+<!-- Design System Showcase -->
+<section class="py-16 lg:py-24" style="background: var(--bg-primary);">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <!-- Header with Fluid Typography -->
+    <div class="text-center mb-16 stagger-children">
+      <h2 class="text-display-fluid mb-6 text-gradient">
+        Next Level Design System
+      </h2>
+      <p class="text-fluid-lg max-w-3xl mx-auto leading-relaxed" style="color: var(--text-secondary);">
+        Experience our enhanced design system with fluid typography, advanced animations, and semantic color tokens.
+      </p>
+    </div>
+
+    <!-- Advanced Cards Grid -->
+    <div class="grid-masonry mb-16 stagger-children">
+      
+      <!-- Interactive Card -->
+      <div class="card card--interactive">
+        <div class="space-lg">
+          <div class="cluster mb-4">
+            <div class="w-12 h-12 rounded-full flex items-center justify-center" style="background: var(--color-success);">
+              <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+              </svg>
+            </div>
+            <div>
+              <h3 class="text-fluid-xl font-bold" style="color: var(--text-primary); font-family: var(--font-heading);">
+                Interactive Cards
+              </h3>
+              <p class="text-fluid-sm" style="color: var(--text-secondary);">
+                Hover to see advanced animations
+              </p>
+            </div>
+          </div>
+          <p class="text-fluid-base leading-relaxed" style="color: var(--text-secondary);">
+            Cards now feature sophisticated hover states with GPU-accelerated transforms and smooth easing functions.
+          </p>
+        </div>
+      </div>
+
+      <!-- Floating Card -->
+      <div class="card card--floating">
+        <div class="space-lg">
+          <div class="cluster mb-4">
+            <div class="w-12 h-12 rounded-full flex items-center justify-center" style="background: var(--color-info);">
+              <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+              </svg>
+            </div>
+            <div>
+              <h3 class="text-fluid-xl font-bold" style="color: var(--text-primary); font-family: var(--font-heading);">
+                Floating Surfaces
+              </h3>
+              <p class="text-fluid-sm" style="color: var(--text-secondary);">
+                Glassmorphism effects
+              </p>
+            </div>
+          </div>
+          <p class="text-fluid-base leading-relaxed" style="color: var(--text-secondary);">
+            Floating cards use backdrop blur and semi-transparent backgrounds for modern glassmorphism effects.
+          </p>
+        </div>
+      </div>
+
+      <!-- State Card -->
+      <div class="card state-success">
+        <div class="space-lg">
+          <div class="cluster mb-4">
+            <div class="w-12 h-12 rounded-full flex items-center justify-center" style="background: var(--color-warning);">
+              <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+              </svg>
+            </div>
+            <div>
+              <h3 class="text-fluid-xl font-bold" style="color: var(--text-primary); font-family: var(--font-heading);">
+                Semantic States
+              </h3>
+              <p class="text-fluid-sm" style="color: var(--text-secondary);">
+                Success, warning, error states
+              </p>
+            </div>
+          </div>
+          <p class="text-fluid-base leading-relaxed" style="color: var(--text-secondary);">
+            Semantic color tokens provide consistent success, warning, error, and info states across components.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Advanced Buttons -->
+    <div class="text-center mb-16">
+      <h3 class="text-headline-fluid mb-8" style="color: var(--text-primary); font-family: var(--font-heading);">
+        Enhanced Button System
+      </h3>
+      <div class="cluster justify-center">
+        <button class="button">
+          Primary Button
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+          </svg>
+        </button>
+        <button class="button button--secondary">
+          Secondary Button
+        </button>
+        <button class="button button--ghost">
+          Ghost Button
+        </button>
+        <button class="button button--success">
+          Success Button
+        </button>
+        <button class="button button--warning">
+          Warning Button
+        </button>
+      </div>
+    </div>
+
+    <!-- Typography Scale -->
+    <div class="card mb-16">
+      <div class="space-lg">
+        <h3 class="text-headline-fluid mb-8" style="color: var(--text-primary); font-family: var(--font-heading);">
+          Fluid Typography Scale
+        </h3>
+        <div class="space-md">
+          <div class="text-fluid-4xl font-bold leading-tight" style="color: var(--text-primary);">
+            Display Text (Fluid 4XL)
+          </div>
+          <div class="text-fluid-3xl font-bold leading-snug" style="color: var(--text-primary);">
+            Headline Text (Fluid 3XL)
+          </div>
+          <div class="text-fluid-2xl font-semibold leading-snug" style="color: var(--text-primary);">
+            Subheadline Text (Fluid 2XL)
+          </div>
+          <div class="text-fluid-xl leading-normal" style="color: var(--text-secondary);">
+            Large Body Text (Fluid XL)
+          </div>
+          <div class="text-fluid-base leading-relaxed" style="color: var(--text-secondary);">
+            Regular Body Text (Fluid Base) - This text scales smoothly between screen sizes using CSS clamp() functions.
+          </div>
+          <div class="text-fluid-sm leading-normal" style="color: var(--text-muted);">
+            Small Text (Fluid SM) - Perfect for captions and metadata.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Spacing System -->
+    <div class="card">
+      <div class="space-lg">
+        <h3 class="text-headline-fluid mb-8" style="color: var(--text-primary); font-family: var(--font-heading);">
+          Advanced Spacing System
+        </h3>
+        <div class="space-md">
+          <div class="flex items-center space-3xs">
+            <div class="w-4 h-4 rounded" style="background: var(--color-primary);"></div>
+            <span class="text-fluid-sm" style="color: var(--text-secondary);">3XS Spacing (2px)</span>
+          </div>
+          <div class="flex items-center space-xs">
+            <div class="w-4 h-4 rounded" style="background: var(--color-primary);"></div>
+            <span class="text-fluid-sm" style="color: var(--text-secondary);">XS Spacing (8px)</span>
+          </div>
+          <div class="flex items-center space-md">
+            <div class="w-4 h-4 rounded" style="background: var(--color-primary);"></div>
+            <span class="text-fluid-sm" style="color: var(--text-secondary);">MD Spacing (16px)</span>
+          </div>
+          <div class="flex items-center space-xl">
+            <div class="w-4 h-4 rounded" style="background: var(--color-primary);"></div>
+            <span class="text-fluid-sm" style="color: var(--text-secondary);">XL Spacing (32px)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Animation Styles -->
+<style>
+  /* Component-specific animations */
+  .design-showcase {
+    animation: fadeIn 0.8s var(--ease-out-expo);
+  }
+  
+  /* Enhanced hover effects for this showcase */
+  .card--interactive:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 
+      0 25px 50px rgba(0, 0, 0, 0.15),
+      0 10px 20px rgba(0, 0, 0, 0.1);
+  }
+</style>
