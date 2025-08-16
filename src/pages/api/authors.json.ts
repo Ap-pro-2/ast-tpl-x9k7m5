@@ -9,6 +9,7 @@ type Author = CollectionEntry<'authors'>;
 interface AuthorMetadata {
   id: string;
   name: string;
+  slug: string;
   bio?: string;
   avatar?: string;
   email?: string;
@@ -207,6 +208,7 @@ export const GET: APIRoute = async ({ request, url }): Promise<Response> => {
       return {
         id: author.id,
         name: author.data.name || author.id,
+        slug: author.data.slug,
         bio: author.data.bio,
         avatar: author.data.avatar,
         email: author.data.email,

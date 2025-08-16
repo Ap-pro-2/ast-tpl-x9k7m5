@@ -2,34 +2,25 @@ import { getCollection, type CollectionEntry } from 'astro:content';
 import type { APIRoute } from 'astro';
 import { BLOG_API_KEY } from "astro:env/server";
 
-// Define the category type from your content collection
-type Category = CollectionEntry<'categories'>;
+// Define the affiliate category type from your content collection
+type AffiliateCategory = CollectionEntry<'affiliateCategories'>;
 
-// Define the SEO type to match our backend schema
-interface CategorySEO {
-  title?: string;
-  description?: string;
-  keywords?: string[];
-  ogImage?: string;
-  ogImageAlt?: string;
-}
 
-// Define the API response type for categories - UPDATED TO MATCH BACKEND
-interface CategoryMetadata {
+
+// Define the API response type for affiliate categories
+interface AffiliateCategoryMetadata {
   id: string;
   name: string;
   description?: string;
   color?: string;
-  slug: string;
-  seo?: CategorySEO; // Added SEO support
-  postCount: number;
-  lastPostDate?: string;
+  productCount: number;
+  lastUpdated?: string;
   featured: boolean;
 }
 
-interface CategoryApiResponse {
+interface AffiliateCategoryApiResponse {
   success: boolean;
-  data: CategoryMetadata[];
+  data: AffiliateCategoryMetadata[];
   pagination: {
     page: number;
     perPage: number;
@@ -40,6 +31,7 @@ interface CategoryApiResponse {
   };
   filters: {
     search: string | null;
+    active: string | null;
     featured: string | null;
   };
   timestamp: number;
@@ -109,28 +101,26 @@ export const GET: APIRoute = async ({ request, url }): Promise<Response> => {
   const sortBy: string = searchParams.get('sortBy') || 'name';
   const sortOrder: 'asc' | 'desc' = (searchParams.get('sortOrder') as 'asc' | 'desc') || 'asc';
   const search: string = searchParams.get('search') || '';
+  const active: string | null = searchParams.get('active');
   const featured: string | null = searchParams.get('featured');
 
   try {
-    console.log('📂 Fetching categories from collection...');
+    console.log('📂 Fetching affiliate categories from collection...');
     
-    // ✨ Get ALL categories with proper typing
-    const allCategories: Category[] = await getCollection('categories');
-    console.log(`📂 Found ${allCategories.length} categories in collection`);
+    // ✨ Get ALL affiliate categories with proper typing
+    const allCategories: AffiliateCategory[] = await getCollection('affiliateCategories');
+    console.log(`📂 Found ${allCategories.length} affiliate categories in collection`);
     
-    // ✨ Get ALL blog posts to calculate post counts per category
-    const allPosts = await getCollection('blog', ({ data }) => {
-      // Only count published posts for public API
-      return data.status === 'published';
-    });
-    console.log(`📝 Found ${allPosts.length} published posts`);
+    // ✨ Get ALL affiliate products to calculate product counts per category
+    const allProducts = await getCollection('affiliateProducts');
+    console.log(`🛍️ Found ${allProducts.length} active affiliate products`);
 
     // 🔍 Server-side search with proper typing
-    let filteredCategories: Category[] = allCategories;
+    let filteredCategories: AffiliateCategory[] = allCategories;
     
     if (search) {
       const searchTerm: string = search.toLowerCase();
-      filteredCategories = filteredCategories.filter((category: Category) => {
+      filteredCategories = filteredCategories.filter((category: AffiliateCategory) => {
         const nameMatch: boolean = category.data.name?.toLowerCase().includes(searchTerm) || false;
         const descMatch: boolean = category.data.description?.toLowerCase().includes(searchTerm) || false;
         const idMatch: boolean = category.id?.toLowerCase().includes(searchTerm) || false;
@@ -140,54 +130,51 @@ export const GET: APIRoute = async ({ request, url }): Promise<Response> => {
       console.log(`🔍 Search "${search}" filtered to ${filteredCategories.length} categories`);
     }
 
-    // 📊 Transform categories with metadata and post counts - UPDATED WITH SEO
-    const categoriesWithMetadata: CategoryMetadata[] = filteredCategories.map((category: Category) => {
-      // Calculate post count for this category
-      const categoryPosts = allPosts.filter(post => {
+    // 📊 Transform categories with metadata and product counts
+    const categoriesWithMetadata: AffiliateCategoryMetadata[] = filteredCategories.map((category: AffiliateCategory) => {
+      // Calculate product count for this category
+      const categoryProducts = allProducts.filter(product => {
         // Handle both string references and object references
-        if (typeof post.data.category === 'string') {
-          return post.data.category === category.id;
-        } else if (post.data.category && typeof post.data.category === 'object') {
-          return post.data.category.id === category.id;
+        if (typeof product.data.category === 'string') {
+          return product.data.category === category.id;
+        } else if (product.data.category && typeof product.data.category === 'object') {
+          return product.data.category.id === category.id;
         }
         return false;
       });
       
-      const postCount = categoryPosts.length;
-      console.log(`📊 Category "${category.data.name}" has ${postCount} posts`);
+      const productCount = categoryProducts.length;
+      console.log(`📊 Category "${category.data.name}" has ${productCount} products`);
       
-      // Find the most recent post date for this category
-      const lastPostDate = categoryPosts.length > 0 
-        ? Math.max(...categoryPosts.map(p => new Date(p.data.pubDate).getTime()))
-        : null;
+      // Since we removed dateAdded and lastUpdated fields, we'll use current time as fallback
+      const lastUpdated = categoryProducts.length > 0 ? Date.now() : null;
 
-      // Determine if featured (categories with 3+ posts)
-      const featured = postCount >= 3;
-
-      // Extract SEO data from category - FIXED TO MATCH SCHEMA
-      const seoData: CategorySEO | undefined = category.data.seo ? {
-        title: category.data.seo.title,
-        description: category.data.seo.description,
-        keywords: category.data.seo.keywords,
-        ogImage: category.data.seo.ogImage,
-        ogImageAlt: category.data.seo.ogImageAlt,
-      } : undefined;
+      // Determine if featured (categories with 3+ products)
+      const featured = productCount >= 3;
 
       return {
         id: category.id,
         name: category.data.name || category.id,
         description: category.data.description,
         color: category.data.color,
-        slug: category.data.slug || category.id,
-        seo: seoData, // Include SEO data
-        postCount,
-        lastPostDate: lastPostDate ? new Date(lastPostDate).toISOString() : undefined,
+        productCount,
+        lastUpdated: lastUpdated ? new Date(lastUpdated).toISOString() : undefined,
         featured,
       };
     });
 
     // 🔍 Apply filters
     let finalCategories = categoriesWithMetadata;
+
+    // Filter by active status - since we removed the active field, all categories are considered active
+    if (active !== null) {
+      const isActive = active === 'true';
+      if (!isActive) {
+        // If filtering for inactive categories, return empty array since all are active now
+        finalCategories = [];
+      }
+      console.log(`✨ Filtered to ${finalCategories.length} ${isActive ? 'active' : 'inactive'} categories`);
+    }
 
     // Filter by featured
     if (featured !== null) {
@@ -204,12 +191,12 @@ export const GET: APIRoute = async ({ request, url }): Promise<Response> => {
         case 'name':
           comparison = a.name.localeCompare(b.name);
           break;
-        case 'postCount':
-          comparison = a.postCount - b.postCount;
+        case 'productCount':
+          comparison = a.productCount - b.productCount;
           break;
-        case 'lastPostDate':
-          const dateA = a.lastPostDate ? new Date(a.lastPostDate).getTime() : 0;
-          const dateB = b.lastPostDate ? new Date(b.lastPostDate).getTime() : 0;
+        case 'lastUpdated':
+          const dateA = a.lastUpdated ? new Date(a.lastUpdated).getTime() : 0;
+          const dateB = b.lastUpdated ? new Date(b.lastUpdated).getTime() : 0;
           comparison = dateA - dateB;
           break;
         default:
@@ -222,9 +209,9 @@ export const GET: APIRoute = async ({ request, url }): Promise<Response> => {
     // 📄 Paginate
     const startIndex: number = (page - 1) * perPage;
     const endIndex: number = startIndex + perPage;
-    const paginatedCategories: CategoryMetadata[] = finalCategories.slice(startIndex, endIndex);
+    const paginatedCategories: AffiliateCategoryMetadata[] = finalCategories.slice(startIndex, endIndex);
 
-    const apiResponse: CategoryApiResponse = {
+    const apiResponse: AffiliateCategoryApiResponse = {
       success: true,
       data: paginatedCategories,
       pagination: {
@@ -237,12 +224,13 @@ export const GET: APIRoute = async ({ request, url }): Promise<Response> => {
       },
       filters: {
         search: search || null,
+        active: active,
         featured: featured,
       },
       timestamp: Date.now(),
     };
 
-    console.log(`✅ Returning ${paginatedCategories.length} categories (page ${page} of ${Math.ceil(finalCategories.length / perPage)})`);
+    console.log(`✅ Returning ${paginatedCategories.length} affiliate categories (page ${page} of ${Math.ceil(finalCategories.length / perPage)})`);
 
     return new Response(JSON.stringify(apiResponse), {
       status: 200,
@@ -250,11 +238,11 @@ export const GET: APIRoute = async ({ request, url }): Promise<Response> => {
     });
 
   } catch (error: unknown) {
-    console.error('❌ Error fetching categories:', error);
+    console.error('❌ Error fetching affiliate categories:', error);
     
     return new Response(JSON.stringify({
       success: false,
-      error: 'Failed to fetch categories',
+      error: 'Failed to fetch affiliate categories',
       details: error instanceof Error ? error.message : 'Unknown error'
     }), {
       status: 500,

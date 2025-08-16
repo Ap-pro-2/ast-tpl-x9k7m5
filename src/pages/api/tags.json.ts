@@ -5,13 +5,23 @@ import { BLOG_API_KEY } from "astro:env/server";
 // Define the tag type from your content collection
 type Tag = CollectionEntry<'tags'>;
 
-// Define the API response type for tags
+// Define the SEO type to match our backend schema
+interface TagSEO {
+  title?: string;
+  description?: string;
+  keywords?: string[];
+  ogImage?: string;
+  ogImageAlt?: string;
+}
+
+// Define the API response type for tags - UPDATED TO MATCH BACKEND
 interface TagMetadata {
   id: string;
   name: string;
   description?: string;
   color?: string;
   slug: string;
+  seo?: TagSEO; // Added SEO support
   postCount: number;
   lastPostDate?: string;
   trending: boolean;
@@ -111,16 +121,18 @@ export const GET: APIRoute = async ({ request, url }): Promise<Response> => {
   const minPosts: number = parseInt(searchParams.get('minPosts') || '0');
 
   try {
+    console.log('🏷️ Fetching tags from collection...');
+    
     // ✨ Get ALL tags with proper typing
     const allTags: Tag[] = await getCollection('tags');
+    console.log(`🏷️ Found ${allTags.length} tags in collection`);
     
     // ✨ Get ALL blog posts to calculate post counts per tag
     const allPosts = await getCollection('blog', ({ data }) => {
       // Only count published posts for public API
       return data.status === 'published';
     });
-
-    console.log(`🏷️ Processing ${allTags.length} tags and ${allPosts.length} published posts`);
+    console.log(`📝 Found ${allPosts.length} published posts`);
 
     // 🔍 Server-side search with proper typing
     let filteredTags: Tag[] = allTags;
@@ -137,34 +149,44 @@ export const GET: APIRoute = async ({ request, url }): Promise<Response> => {
       console.log(`🔍 Search "${search}" filtered to ${filteredTags.length} tags`);
     }
 
-    // 📊 Transform tags with metadata and post counts
+    // 📊 Transform tags with metadata and post counts - UPDATED WITH SEO
     const tagsWithMetadata: TagMetadata[] = filteredTags.map((tag: Tag) => {
-      // Calculate post count for this tag - handle both array and single tag cases
+      // Calculate post count for this tag - IMPROVED HANDLING
       const tagPosts = allPosts.filter(post => {
-        if (!post.data.tags) return false;
+        if (!post.data.tags || !Array.isArray(post.data.tags)) return false;
         
-        // Handle case where tags might be an array of references or objects
-        return Array.isArray(post.data.tags) 
-          ? post.data.tags.some(tagRef => {
-              // Handle both { id: string } objects and direct string references
-              return typeof tagRef === 'object' && tagRef.id === tag.id
-            })
-          : false;
+        // Handle both string references and object references
+        return post.data.tags.some(tagRef => {
+          if (typeof tagRef === 'string') {
+            return tagRef === tag.id;
+          } else if (tagRef && typeof tagRef === 'object' && 'id' in tagRef) {
+            return tagRef.id === tag.id;
+          }
+          return false;
+        });
       });
       
       const postCount = tagPosts.length;
+      console.log(`🏷️ Tag "${tag.data.name}" has ${postCount} posts`);
       
       // Find the most recent post date for this tag
       const lastPostDate = tagPosts.length > 0 
         ? Math.max(...tagPosts.map(p => new Date(p.data.pubDate).getTime()))
         : null;
       
-      // Find most common category for this tag
+      // Find most common category for this tag - IMPROVED HANDLING
       const categoryFrequency: Record<string, number> = {};
       tagPosts.forEach(post => {
-        if (post.data.category && typeof post.data.category === 'object' && post.data.category.id) {
-          const catId = post.data.category.id;
-          categoryFrequency[catId] = (categoryFrequency[catId] || 0) + 1;
+        let categoryId: string | undefined;
+        
+        if (typeof post.data.category === 'string') {
+          categoryId = post.data.category;
+        } else if (post.data.category && typeof post.data.category === 'object' && 'id' in post.data.category) {
+          categoryId = post.data.category.id;
+        }
+        
+        if (categoryId) {
+          categoryFrequency[categoryId] = (categoryFrequency[categoryId] || 0) + 1;
         }
       });
       
@@ -181,12 +203,22 @@ export const GET: APIRoute = async ({ request, url }): Promise<Response> => {
       );
       const trending = recentPosts.length >= 2; // At least 2 posts in last 30 days
 
+      // Extract SEO data from tag - FIXED TO MATCH SCHEMA
+      const seoData: TagSEO | undefined = tag.data.seo ? {
+        title: tag.data.seo.title,
+        description: tag.data.seo.description,
+        keywords: tag.data.seo.keywords,
+        ogImage: tag.data.seo.ogImage,
+        ogImageAlt: tag.data.seo.ogImageAlt,
+      } : undefined;
+
       return {
         id: tag.id,
         name: tag.data.name || tag.id,
         description: tag.data.description,
         color: tag.data.color,
         slug: tag.data.slug || tag.id,
+        seo: seoData, // Include SEO data
         postCount,
         lastPostDate: lastPostDate ? new Date(lastPostDate).toISOString() : undefined,
         trending,
