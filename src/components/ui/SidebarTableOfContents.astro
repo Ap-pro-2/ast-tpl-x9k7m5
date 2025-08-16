@@ -1,0 +1,145 @@
+---
+// Sidebar Table of Contents Component - Clean & Interactive
+interface Props {
+    headings: Array<{
+        depth: number;
+        slug: string;
+        text: string;
+    }>;
+}
+
+const { headings } = Astro.props;
+
+// Filter headings (only h2 and h3 for cleaner sidebar)
+const filteredHeadings = headings.filter((heading) => heading.depth <= 3);
+---
+
+{
+    filteredHeadings.length > 0 && (
+        <nav class="toc-nav">
+            <ul class="space-y-1">
+                {filteredHeadings.map((heading) => (
+                    <li>
+                        <a
+                            href={`#${heading.slug}`}
+                            class={`toc-link block py-2 px-3 text-sm rounded-md transition-all duration-200 ${
+                                heading.depth === 2
+                                    ? "font-medium"
+                                    : "font-normal ml-4"
+                            }`}
+                            data-heading-id={heading.slug}
+                            style="color: var(--text-secondary)"
+                        >
+                            {heading.text}
+                        </a>
+                    </li>
+                ))}
+            </ul>
+        </nav>
+    )
+}
+
+<style>
+    .toc-link {
+        border-left: 2px solid transparent;
+        transition: all 0.2s ease;
+    }
+
+    .toc-link:hover {
+        color: var(--color-primary) !important;
+        background: var(--bg-tertiary);
+        border-left-color: var(--color-primary);
+    }
+
+    .toc-link.active {
+        color: var(--color-primary) !important;
+        background: var(--bg-tertiary);
+        border-left-color: var(--color-primary);
+        font-weight: 600;
+    }
+
+    .toc-nav {
+        max-height: 300px;
+        overflow-y: auto;
+    }
+
+    .toc-nav::-webkit-scrollbar {
+        width: 3px;
+    }
+
+    .toc-nav::-webkit-scrollbar-track {
+        background: var(--bg-tertiary);
+        border-radius: 2px;
+    }
+
+    .toc-nav::-webkit-scrollbar-thumb {
+        background: var(--color-primary);
+        border-radius: 2px;
+    }
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const tocLinks = document.querySelectorAll(".toc-link");
+        const headings = document.querySelectorAll("h1, h2, h3, h4, h5, h6");
+
+        // Intersection Observer for active heading detection
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    const id = entry.target.getAttribute("id");
+                    const tocLink = document.querySelector(
+                        `[data-heading-id="${id}"]`,
+                    );
+
+                    if (entry.isIntersecting) {
+                        // Remove active class from all links
+                        tocLinks.forEach((link) =>
+                            link.classList.remove("active"),
+                        );
+                        // Add active class to current link
+                        if (tocLink) {
+                            tocLink.classList.add("active");
+                        }
+                    }
+                });
+            },
+            {
+                rootMargin: "-20% 0% -35% 0%",
+                threshold: 0,
+            },
+        );
+
+        // Observe all headings
+        headings.forEach((heading) => {
+            if (heading.id) {
+                observer.observe(heading);
+            }
+        });
+
+        // Smooth scroll for TOC links
+        tocLinks.forEach((link) => {
+            link.addEventListener("click", (e) => {
+                e.preventDefault();
+                const href = link.getAttribute("href");
+                if (!href) return;
+                
+                const targetId = href.substring(1);
+                const targetElement = document.getElementById(targetId);
+
+                if (targetElement) {
+                    const headerOffset = 100; // Account for sticky header
+                    const elementPosition =
+                        targetElement.getBoundingClientRect().top;
+                    const offsetPosition =
+                        elementPosition + window.pageYOffset - headerOffset;
+
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: "smooth",
+                    });
+                }
+            });
+        });
+    });
+</script>
