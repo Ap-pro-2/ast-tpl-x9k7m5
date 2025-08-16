@@ -1,0 +1,521 @@
+{
+    "dashboardThemeConfig": {
+        "description": "This JSON structure defines what your Next.js dashboard needs to update themes via GitHub API",
+        "targetFile": "src/content/data/theme-settings.json",
+        "updateMethod": "Update the JSON file directly - much safer and easier!",
+        "formStructure": {
+            "colors": {
+                "section": "Brand Colors",
+                "description": "Main colors that define your brand identity",
+                "fields": {
+                    "primary": {
+                        "label": "Primary Color",
+                        "type": "color",
+                        "description": "Main brand color (buttons, links)",
+                        "default": "#8B4513",
+                        "category": "brand"
+                    },
+                    "primaryLight": {
+                        "label": "Primary Light",
+                        "type": "color",
+                        "description": "Lighter version for hover effects",
+                        "default": "#A0522D",
+                        "category": "brand"
+                    },
+                    "primaryDark": {
+                        "label": "Primary Dark",
+                        "type": "color",
+                        "description": "Darker version for active states",
+                        "default": "#654321",
+                        "category": "brand"
+                    },
+                    "secondary": {
+                        "label": "Secondary Color",
+                        "type": "color",
+                        "description": "Supporting brand color",
+                        "default": "#6B5B73",
+                        "category": "brand"
+                    },
+                    "accent": {
+                        "label": "Accent Color",
+                        "type": "color",
+                        "description": "Highlight and accent color",
+                        "default": "#D2691E",
+                        "category": "brand"
+                    }
+                }
+            },
+            "textColors": {
+                "section": "Text Colors",
+                "description": "Colors for different text elements",
+                "fields": {
+                    "textPrimary": {
+                        "label": "Primary Text",
+                        "type": "color",
+                        "description": "Main headings and important text",
+                        "default": "#1A0F0A",
+                        "category": "text"
+                    },
+                    "textSecondary": {
+                        "label": "Secondary Text",
+                        "type": "color",
+                        "description": "Body text and paragraphs",
+                        "default": "#2F1B14",
+                        "category": "text"
+                    },
+                    "textMuted": {
+                        "label": "Muted Text",
+                        "type": "color",
+                        "description": "Less important text and captions",
+                        "default": "#5D4037",
+                        "category": "text"
+                    },
+                    "textAccent": {
+                        "label": "Accent Text",
+                        "type": "color",
+                        "description": "Links and highlighted text",
+                        "default": "#8B4513",
+                        "category": "text"
+                    }
+                }
+            },
+            "backgrounds": {
+                "section": "Background Colors",
+                "description": "Background colors for different areas",
+                "fields": {
+                    "bgPrimary": {
+                        "label": "Primary Background",
+                        "type": "color",
+                        "description": "Main page background",
+                        "default": "#FFF8F0",
+                        "category": "background"
+                    },
+                    "bgSecondary": {
+                        "label": "Secondary Background",
+                        "type": "color",
+                        "description": "Section backgrounds",
+                        "default": "#F5F0E8",
+                        "category": "background"
+                    },
+                    "bgTertiary": {
+                        "label": "Tertiary Background",
+                        "type": "color",
+                        "description": "Card and component backgrounds",
+                        "default": "#EDE4D3",
+                        "category": "background"
+                    }
+                }
+            },
+            "surfaces": {
+                "section": "Surface Colors",
+                "description": "Colors for cards and overlays",
+                "fields": {
+                    "surfaceCard": {
+                        "label": "Card Surface",
+                        "type": "color",
+                        "description": "Background for cards and panels",
+                        "default": "#FEFCF7",
+                        "category": "surface"
+                    },
+                    "surfaceOverlay": {
+                        "label": "Overlay Surface",
+                        "type": "color",
+                        "description": "Background for modals and overlays",
+                        "default": "#F8F3E9",
+                        "category": "surface"
+                    }
+                }
+            },
+            "borders": {
+                "section": "Border Colors",
+                "description": "Colors for borders and dividers",
+                "fields": {
+                    "borderDefault": {
+                        "label": "Default Border",
+                        "type": "color",
+                        "description": "Standard border color",
+                        "default": "#D4C4A8",
+                        "category": "border"
+                    },
+                    "borderLight": {
+                        "label": "Light Border",
+                        "type": "color",
+                        "description": "Subtle border color",
+                        "default": "#E8DCC6",
+                        "category": "border"
+                    },
+                    "borderAccent": {
+                        "label": "Accent Border",
+                        "type": "color",
+                        "description": "Highlighted border color",
+                        "default": "#C4A484",
+                        "category": "border"
+                    }
+                }
+            },
+            "typography": {
+                "section": "Typography",
+                "description": "Font families and sizes",
+                "fields": {
+                    "fontHeading": {
+                        "label": "Heading Font",
+                        "type": "select",
+                        "description": "Font family for headings",
+                        "default": "\"Georgia\", \"Times New Roman\", serif",
+                        "options": [
+                            "\"Georgia\", \"Times New Roman\", serif",
+                            "\"Helvetica Neue\", \"Arial\", sans-serif",
+                            "\"Inter\", system-ui, sans-serif",
+                            "\"Playfair Display\", \"Georgia\", serif",
+                            "system-ui, -apple-system, sans-serif"
+                        ],
+                        "category": "typography"
+                    },
+                    "fontBody": {
+                        "label": "Body Font",
+                        "type": "select",
+                        "description": "Font family for body text",
+                        "default": "\"Helvetica Neue\", \"Arial\", sans-serif",
+                        "options": [
+                            "\"Helvetica Neue\", \"Arial\", sans-serif",
+                            "\"Georgia\", \"Times New Roman\", serif",
+                            "\"Inter\", system-ui, sans-serif",
+                            "\"Source Sans Pro\", \"Helvetica Neue\", sans-serif",
+                            "system-ui, -apple-system, sans-serif"
+                        ],
+                        "category": "typography"
+                    },
+                    "fontMono": {
+                        "label": "Monospace Font",
+                        "type": "select",
+                        "description": "Font family for code",
+                        "default": "\"Courier New\", \"Monaco\", monospace",
+                        "options": [
+                            "\"Courier New\", \"Monaco\", monospace",
+                            "ui-monospace, \"Cascadia Code\", \"Source Code Pro\", Menlo, Consolas, monospace",
+                            "\"Monaco\", \"Menlo\", \"Ubuntu Mono\", monospace"
+                        ],
+                        "category": "typography"
+                    }
+                }
+            },
+            "spacing": {
+                "section": "Layout & Spacing",
+                "description": "Spacing and layout settings",
+                "fields": {
+                    "containerMaxWidth": {
+                        "label": "Container Width",
+                        "type": "select",
+                        "description": "Maximum width of content container",
+                        "default": "1200px",
+                        "options": [
+                            "1024px",
+                            "1200px",
+                            "1400px",
+                            "1600px"
+                        ],
+                        "category": "layout"
+                    },
+                    "sectionPadding": {
+                        "label": "Section Padding",
+                        "type": "select",
+                        "description": "Padding for page sections",
+                        "default": "4rem 0",
+                        "options": [
+                            "2rem 0",
+                            "3rem 0",
+                            "4rem 0",
+                            "5rem 0",
+                            "6rem 0"
+                        ],
+                        "category": "layout"
+                    },
+                    "cardPadding": {
+                        "label": "Card Padding",
+                        "type": "select",
+                        "description": "Padding inside cards",
+                        "default": "1.5rem",
+                        "options": [
+                            "1rem",
+                            "1.25rem",
+                            "1.5rem",
+                            "2rem",
+                            "2.5rem"
+                        ],
+                        "category": "layout"
+                    },
+                    "buttonPadding": {
+                        "label": "Button Padding",
+                        "type": "select",
+                        "description": "Padding for buttons",
+                        "default": "0.5rem 1rem",
+                        "options": [
+                            "0.25rem 0.75rem",
+                            "0.5rem 1rem",
+                            "0.75rem 1.25rem",
+                            "1rem 1.5rem"
+                        ],
+                        "category": "layout"
+                    }
+                }
+            },
+            "borderRadius": {
+                "section": "Border Radius",
+                "description": "Roundness of elements",
+                "fields": {
+                    "sm": {
+                        "label": "Small Radius",
+                        "type": "select",
+                        "description": "Small border radius",
+                        "default": "0.25rem",
+                        "options": [
+                            "0rem",
+                            "0.125rem",
+                            "0.25rem",
+                            "0.375rem",
+                            "0.5rem"
+                        ],
+                        "category": "styling"
+                    },
+                    "md": {
+                        "label": "Medium Radius",
+                        "type": "select",
+                        "description": "Medium border radius",
+                        "default": "0.375rem",
+                        "options": [
+                            "0rem",
+                            "0.25rem",
+                            "0.375rem",
+                            "0.5rem",
+                            "0.75rem"
+                        ],
+                        "category": "styling"
+                    },
+                    "lg": {
+                        "label": "Large Radius",
+                        "type": "select",
+                        "description": "Large border radius",
+                        "default": "0.5rem",
+                        "options": [
+                            "0rem",
+                            "0.375rem",
+                            "0.5rem",
+                            "0.75rem",
+                            "1rem"
+                        ],
+                        "category": "styling"
+                    },
+                    "xl": {
+                        "label": "Extra Large Radius",
+                        "type": "select",
+                        "description": "Extra large border radius",
+                        "default": "0.75rem",
+                        "options": [
+                            "0rem",
+                            "0.5rem",
+                            "0.75rem",
+                            "1rem",
+                            "1.5rem"
+                        ],
+                        "category": "styling"
+                    }
+                }
+            },
+            "shadows": {
+                "section": "Shadows",
+                "description": "Shadow effects for depth",
+                "fields": {
+                    "sm": {
+                        "label": "Small Shadow",
+                        "type": "select",
+                        "description": "Subtle shadow effect",
+                        "default": "0 1px 2px 0 rgb(0 0 0 / 0.05)",
+                        "options": [
+                            "none",
+                            "0 1px 2px 0 rgb(0 0 0 / 0.05)",
+                            "0 1px 3px 0 rgb(0 0 0 / 0.1)"
+                        ],
+                        "category": "styling"
+                    },
+                    "md": {
+                        "label": "Medium Shadow",
+                        "type": "select",
+                        "description": "Standard shadow effect",
+                        "default": "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
+                        "options": [
+                            "none",
+                            "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
+                            "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)"
+                        ],
+                        "category": "styling"
+                    },
+                    "lg": {
+                        "label": "Large Shadow",
+                        "type": "select",
+                        "description": "Prominent shadow effect",
+                        "default": "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
+                        "options": [
+                            "none",
+                            "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
+                            "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)"
+                        ],
+                        "category": "styling"
+                    }
+                }
+            },
+            "animation": {
+                "section": "Animation",
+                "description": "Animation timing and effects",
+                "fields": {
+                    "duration": {
+                        "label": "Animation Duration",
+                        "type": "select",
+                        "description": "Speed of animations",
+                        "default": "200ms",
+                        "options": [
+                            "100ms",
+                            "150ms",
+                            "200ms",
+                            "300ms",
+                            "500ms"
+                        ],
+                        "category": "animation"
+                    },
+                    "easing": {
+                        "label": "Animation Easing",
+                        "type": "select",
+                        "description": "Animation timing function",
+                        "default": "cubic-bezier(0.4, 0, 0.2, 1)",
+                        "options": [
+                            "ease",
+                            "ease-in",
+                            "ease-out",
+                            "ease-in-out",
+                            "cubic-bezier(0.4, 0, 0.2, 1)"
+                        ],
+                        "category": "animation"
+                    }
+                }
+            }
+        },
+        "presetThemes": {
+            "description": "Pre-built themes users can select from",
+            "themes": [
+                {
+                    "key": "professional",
+                    "name": "Professional Blue",
+                    "description": "Clean and professional",
+                    "preview": "#3B82F6"
+                },
+                {
+                    "key": "dark",
+                    "name": "Dark Mode",
+                    "description": "Easy on the eyes",
+                    "preview": "#111827"
+                },
+                {
+                    "key": "nature",
+                    "name": "Nature Green",
+                    "description": "Fresh and natural",
+                    "preview": "#10B981"
+                },
+                {
+                    "key": "creative",
+                    "name": "Creative Purple",
+                    "description": "Bold and artistic",
+                    "preview": "#8B5CF6"
+                },
+                {
+                    "key": "warm",
+                    "name": "Warm Orange",
+                    "description": "Energetic and friendly",
+                    "preview": "#F97316"
+                }
+            ]
+        },
+        "githubApiUsage": {
+            "description": "How to use this with GitHub API - MUCH EASIER with JSON!",
+            "steps": [
+                "1. User fills out the form in your Next.js dashboard",
+                "2. Dashboard converts form data to JSON format",
+                "3. Use GitHub API to read current src/content/data/theme-settings.json file",
+                "4. Replace the JSON content with new theme settings",
+                "5. Commit changes back to repository",
+                "6. Site rebuilds automatically with new theme - NO TypeScript parsing needed!"
+            ],
+            "apiEndpoints": {
+                "getFile": "GET /repos/{owner}/{repo}/contents/src/content/data/theme-settings.json",
+                "updateFile": "PUT /repos/{owner}/{repo}/contents/src/content/data/theme-settings.json"
+            },
+            "benefits": [
+                "✅ No TypeScript syntax to worry about",
+                "✅ No risk of breaking the build with syntax errors",
+                "✅ Simple JSON structure - easy to validate",
+                "✅ Can use standard JSON libraries",
+                "✅ Much safer for automated updates"
+            ]
+        },
+        "exampleOutput": {
+            "description": "Example JSON that the dashboard should generate",
+            "generatedJson": {
+                "themeSettings": {
+                    "colors": {
+                        "primary": "#3B82F6",
+                        "primaryLight": "#60A5FA",
+                        "primaryDark": "#1D4ED8",
+                        "secondary": "#6B7280",
+                        "accent": "#10B981",
+                        "textPrimary": "#111827",
+                        "textSecondary": "#374151",
+                        "textMuted": "#6B7280",
+                        "textAccent": "#3B82F6",
+                        "bgPrimary": "#FFFFFF",
+                        "bgSecondary": "#F9FAFB",
+                        "bgTertiary": "#F3F4F6",
+                        "surfaceCard": "#FFFFFF",
+                        "surfaceOverlay": "#F9FAFB",
+                        "borderDefault": "#E5E7EB",
+                        "borderLight": "#F3F4F6",
+                        "borderAccent": "#D1D5DB"
+                    },
+                    "typography": {
+                        "fontHeading": "system-ui, -apple-system, sans-serif",
+                        "fontBody": "system-ui, -apple-system, sans-serif",
+                        "fontMono": "ui-monospace, monospace",
+                        "textXs": "0.75rem",
+                        "textSm": "0.875rem",
+                        "textBase": "1rem",
+                        "textLg": "1.125rem",
+                        "textXl": "1.25rem",
+                        "text2xl": "1.5rem",
+                        "text3xl": "1.875rem",
+                        "text4xl": "2.25rem"
+                    },
+                    "spacing": {
+                        "containerMaxWidth": "1200px",
+                        "sectionPadding": "4rem 0",
+                        "cardPadding": "1.5rem",
+                        "buttonPadding": "0.5rem 1rem"
+                    },
+                    "borderRadius": {
+                        "sm": "0.25rem",
+                        "md": "0.375rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "shadows": {
+                        "sm": "0 1px 2px 0 rgb(0 0 0 / 0.05)",
+                        "md": "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
+                        "lg": "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
+                        "xl": "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)"
+                    },
+                    "animation": {
+                        "duration": "200ms",
+                        "easing": "cubic-bezier(0.4, 0, 0.2, 1)"
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,61 @@
+---
+title: Privacy Policy
+description: How we collect, use, and protect your personal information when you visit our website.
+pubDate: 2025-07-15
+seo:
+  title: "Privacy Policy | AstroPress Coffee - Data Protection & Privacy"
+  description: "Learn how AstroPress Coffee collects, uses, and protects your personal information. Our comprehensive privacy policy ensures your data security and privacy rights."
+  keywords: ["privacy policy", "data protection", "personal information", "cookies", "user rights", "data security"]
+  ogImage: "/images/seo/privacy-policy-og.jpg"
+  canonical: "/legal/privacy"
+---
+
+## Information We Collect
+
+We collect information you provide directly to us, such as when you:
+- Leave comments on blog posts
+- Contact us through our contact form
+- Create an account on our website
+
+### Types of Information
+
+**Personal Information** may include:
+- Name and email address
+- IP address and browser information
+- Usage data and analytics
+
+**Cookies and Tracking** - We use cookies to:
+1. Remember your preferences
+2. Analyze website traffic
+3. Improve user experience
+
+## How We Use Your Information
+
+We use the information we collect to:
+
+- Provide and maintain our services
+- Respond to your comments and questions
+- Analyze usage patterns to improve our website
+- Comply with legal obligations
+
+> **Important**: We never sell your personal information to third parties.
+
+## Data Protection
+
+We implement appropriate security measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction.
+
+### Your Rights
+
+You have the right to:
+- Access your personal data
+- Correct inaccurate information
+- Request deletion of your data
+- Opt-out of marketing communications
+
+## Contact Us
+
+If you have questions about this Privacy Policy, please contact us at **[email]**.
+
+---
+
+*Last updated: July 15, 2025*

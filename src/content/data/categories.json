@@ -1,0 +1,127 @@
+[
+  {
+    "id": "uncategorized",
+    "name": "Uncategorized",
+    "description": "General posts and articles",
+    "color": "var(--text-muted)",
+    "slug": "uncategorized",
+    "seo": {
+      "title": "Uncategorized Articles & Posts",
+      "description": "Browse our collection of general articles and posts covering various topics and insights.",
+      "keywords": [
+        "articles",
+        "posts",
+        "blog",
+        "content",
+        "insights",
+        "general"
+      ],
+      "ogImageAlt": "Uncategorized articles and general content"
+    }
+  },
+  {
+    "id": "digital-marketing-tools",
+    "name": "Digital Marketing Tools",
+    "description": "Reviews and guides for the best digital marketing tools and software solutions",
+    "color": "var(--color-primary)",
+    "slug": "digital-marketing-tools",
+    "seo": {
+      "title": "Digital Marketing Tools Reviews & Guides",
+      "description": "Discover the best digital marketing tools and software. In-depth reviews, comparisons, and guides to help you choose the right marketing solutions.",
+      "keywords": [
+        "digital marketing tools",
+        "marketing software",
+        "email marketing",
+        "landing pages",
+        "marketing automation",
+        "conversion tools"
+      ],
+      "ogImage": "/images/seo/digital-marketing-tools-og.jpg",
+      "ogImageAlt": "Digital marketing tools and software reviews"
+    }
+  },
+  {
+    "id": "online-business-software",
+    "name": "Online Business Software",
+    "description": "Comprehensive reviews of online business software and SaaS solutions",
+    "color": "var(--color-secondary)",
+    "slug": "online-business-software",
+    "seo": {
+      "title": "Online Business Software Reviews & Comparisons",
+      "description": "Find the best online business software and SaaS solutions. Expert reviews, feature comparisons, and pricing guides for entrepreneurs.",
+      "keywords": [
+        "online business software",
+        "SaaS tools",
+        "business automation",
+        "productivity tools",
+        "business management",
+        "software reviews"
+      ],
+      "ogImage": "/images/seo/online-business-software-og.jpg",
+      "ogImageAlt": "Online business software and SaaS reviews"
+    }
+  },
+  {
+    "id": "ecommerce-tools",
+    "name": "E-commerce Tools",
+    "description": "Essential tools and platforms for online stores and e-commerce businesses",
+    "color": "var(--color-accent)",
+    "slug": "ecommerce-tools",
+    "seo": {
+      "title": "E-commerce Tools & Platform Reviews",
+      "description": "Discover the best e-commerce tools, shopping cart solutions, and online store platforms. Expert reviews and comparisons for online retailers.",
+      "keywords": [
+        "ecommerce tools",
+        "shopping cart",
+        "online store",
+        "ecommerce platform",
+        "retail software",
+        "store management"
+      ],
+      "ogImage": "/images/seo/ecommerce-tools-og.jpg",
+      "ogImageAlt": "E-commerce tools and platform reviews"
+    }
+  },
+  {
+    "id": "automation-software",
+    "name": "Automation Software",
+    "description": "Business automation tools and workflow management solutions",
+    "color": "var(--color-primary)",
+    "slug": "automation-software",
+    "seo": {
+      "title": "Business Automation Software Reviews",
+      "description": "Find the best automation software and workflow tools. Streamline your business processes with our expert reviews and recommendations.",
+      "keywords": [
+        "automation software",
+        "workflow tools",
+        "business automation",
+        "process automation",
+        "productivity automation",
+        "workflow management"
+      ],
+      "ogImage": "/images/seo/automation-software-og.jpg",
+      "ogImageAlt": "Business automation software reviews"
+    }
+  },
+  {
+    "id": "analytics-tools",
+    "name": "Analytics Tools",
+    "description": "Data analytics and business intelligence tools for better decision making",
+    "color": "var(--color-secondary)",
+    "slug": "analytics-tools",
+    "seo": {
+      "title": "Analytics Tools & Business Intelligence Reviews",
+      "description": "Discover powerful analytics tools and business intelligence platforms. Make data-driven decisions with our expert software reviews.",
+      "keywords": [
+        "analytics tools",
+        "business intelligence",
+        "data analytics",
+        "reporting tools",
+        "dashboard software",
+        "data visualization"
+      ],
+      "ogImage": "/images/seo/analytics-tools-og.jpg",
+      "ogImageAlt": "Analytics tools and business intelligence reviews"
+    }
+  }
+]

@@ -1,0 +1,66 @@
+[
+  {
+    "id": "all-tags",
+    "title": "All Tags",
+    "slug": "tags",
+    "description": "Explore all coffee tags and topics on AstroPress Coffee.",
+    "content": "",
+    "published": true,
+    "noindex": false,
+    "seo": {
+      "title": "Coffee Tags & Topics | AstroPress Coffee Blog",
+      "description": "Discover all coffee tags and topics on AstroPress Coffee. Find articles about brewing techniques, coffee origins, equipment reviews, and expert tips.",
+      "keywords": ["coffee tags", "coffee topics", "brewing techniques", "coffee origins", "coffee blog", "coffee guides"],
+      "ogImage": "/images/seo/coffee-tags-main-og.jpg",
+      "canonical": "/tags"
+    }
+  },
+  {
+    "id": "all-categories",
+    "title": "All Categories",
+    "slug": "categories", 
+    "description": "Browse all coffee categories on AstroPress Coffee.",
+    "content": "",
+    "published": true,
+    "noindex": false,
+    "seo": {
+      "title": "Coffee Categories & Topics | AstroPress Coffee Blog",
+      "description": "Browse all coffee categories on AstroPress Coffee. From brewing guides to coffee culture, find expertly organized content for every coffee enthusiast.",
+      "keywords": ["coffee categories", "brewing guides", "coffee culture", "coffee tips", "coffee blog", "coffee education"],
+      "ogImage": "/images/seo/coffee-categories-main-og.jpg",
+      "canonical": "/categories"
+    }
+  },
+  {
+    "id": "all-authors",
+    "title": "All Authors",
+    "slug": "authors",
+    "description": "Meet the coffee experts and writers at AstroPress Coffee.",
+    "content": "",
+    "published": true,
+    "noindex": false,
+    "seo": {
+      "title": "Coffee Experts & Writers | AstroPress Coffee Authors",
+      "description": "Meet the talented coffee experts, baristas, and writers behind AstroPress Coffee. Discover their expertise and browse their latest coffee articles and guides.",
+      "keywords": ["coffee experts", "coffee writers", "baristas", "coffee authors", "coffee professionals", "coffee blog team"],
+      "ogImage": "/images/seo/coffee-authors-og.jpg",
+      "canonical": "/authors"
+    }
+  },
+  {
+    "id": "blog-main",
+    "title": "Coffee Blog",
+    "slug": "blog",
+    "description": "Expert coffee guides, brewing techniques, and coffee culture insights.",
+    "content": "",
+    "published": true,
+    "noindex": false,
+    "seo": {
+      "title": "Coffee Blog | Expert Guides & Brewing Techniques | AstroPress",
+      "description": "Discover expert coffee guides, brewing techniques, equipment reviews, and coffee culture insights. Your ultimate resource for everything coffee.",
+      "keywords": ["coffee blog", "coffee guides", "brewing techniques", "coffee reviews", "coffee culture", "barista tips", "coffee education"],
+      "ogImage": "/images/seo/coffee-blog-main-og.jpg",
+      "canonical": "/blog"
+    }
+  }
+]

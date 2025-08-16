@@ -1,0 +1,132 @@
+---
+// Clean Base Layout - Pure Tailwind
+import { getCollection } from "astro:content";
+import { ClientRouter } from "astro:transitions";
+import Header from "../components/layout/Header.astro";
+import Footer from "../components/layout/Footer.astro";
+import { generateThemeCSS } from "../config/theme";
+import { userTheme } from "../config/user-theme";
+import "../styles/global.css";
+
+// Get site settings using core data
+const allSettings = await getCollection("settings");
+const userSettings = allSettings[0]?.data || {};
+
+const {
+  pageTitle,
+  description = userSettings.siteDescription ||
+    "A modern blog built with Astro",
+  noindex = false,
+} = Astro.props;
+
+const finalTitle = pageTitle
+  ? `${pageTitle} | ${userSettings.siteName || "AstroPress"}`
+  : userSettings.siteName || "AstroPress";
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{finalTitle}</title>
+    <meta name="description" content={description} />
+    <meta
+      name="robots"
+      content={noindex ? "noindex, nofollow" : "index, follow"}
+    />
+    <!-- Favicon Configuration -->
+    <link rel="icon" type="image/png" href={userSettings.favicons?.mainIcon || "/favicon.png"} />
+    <link rel="icon" type="image/png" sizes="32x32" href={userSettings.favicons?.icon32 || "/favicon-32x32.png"} />
+    <link rel="icon" type="image/png" sizes="16x16" href={userSettings.favicons?.icon16 || "/favicon-16x16.png"} />
+    <link rel="apple-touch-icon" href={userSettings.favicons?.appleTouchIcon || "/apple-touch-icon.png"} />
+    <link rel="manifest" href={userSettings.favicons?.manifest || "/site.webmanifest"} />
+    
+    <!-- PWA & Theme Configuration -->
+    <meta name="theme-color" content={userSettings.themeSettings?.colors?.primary || "var(--color-primary)"} />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content={userSettings.siteName || "AstroPress"} />
+
+    <!-- Enhanced SEO Meta Tags -->
+    {Astro.props.keywords && (
+      <meta name="keywords" content={Astro.props.keywords.join(', ')} />
+    )}
+
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content={finalTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={Astro.props.canonicalUrl || `${userSettings.siteUrl}${Astro.url.pathname}`} />
+    {Astro.props.ogImage && (
+      <>
+        <meta property="og:image" content={Astro.props.ogImage} />
+        <meta property="og:image:alt" content={Astro.props.ogImageAlt || finalTitle} />
+      </>
+    )}
+
+    <!-- Twitter Card Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={finalTitle} />
+    <meta name="twitter:description" content={description} />
+    {Astro.props.ogImage && (
+      <meta name="twitter:image" content={Astro.props.ogImage} />
+    )}
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href={Astro.props.canonicalUrl || `${userSettings.siteUrl}${Astro.url.pathname}`} />
+
+    <!-- Theme CSS Variables -->
+    <style set:html={generateThemeCSS(userTheme)}></style>
+
+    <!-- View Transitions for smooth navigation -->
+    <ClientRouter />
+
+    <!-- View Transition Scripts -->
+    <script is:inline>
+      // Add smooth loading indicator
+      document.addEventListener("astro:before-preparation", () => {
+        const loader = document.createElement("div");
+        loader.className = "page-loading show";
+        loader.id = "page-loader";
+        document.body.appendChild(loader);
+      });
+
+      document.addEventListener("astro:after-preparation", () => {
+        const loader = document.getElementById("page-loader");
+        if (loader) {
+          loader.remove();
+        }
+      });
+
+      // Preserve theme across navigation
+      document.addEventListener("astro:before-swap", (event) => {
+        // Preserve theme settings
+        const currentTheme = document.documentElement.dataset.theme;
+        if (currentTheme) {
+          event.newDocument.documentElement.dataset.theme = currentTheme;
+        }
+      });
+
+      // Reinitialize any scripts after navigation
+      document.addEventListener("astro:page-load", () => {
+        // Trigger any initialization that needs to happen on each page
+        console.log("Page loaded with view transitions");
+      });
+    </script>
+
+    <slot name="head" />
+  </head>
+
+  <body class="magazine-layout" style="background: var(--bg-primary); color: var(--text-primary); font-family: var(--font-body);">
+    <!-- Header Component -->
+    <Header />
+
+    <!-- Main content -->
+    <main class="main-content">
+      <slot />
+    </main>
+
+    <!-- Footer Component -->
+    <Footer />
+  </body>
+</html>

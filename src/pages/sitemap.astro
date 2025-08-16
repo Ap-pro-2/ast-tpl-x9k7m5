@@ -1,0 +1,324 @@
+---
+export const prerender = true;
+
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+
+// Get all content collections
+const allPosts = await getCollection("blog");
+const allAuthors = await getCollection("authors");
+const allCategories = await getCollection("categories");
+const allTags = await getCollection("tags");
+
+// Get site settings
+const allSettings = await getCollection("settings");
+const userSettings = allSettings[0]?.data || {};
+
+const pageTitle = "Sitemap";
+const description = `Navigate through all content on ${userSettings.siteName}. Find articles, authors, categories, and everything in between.`;
+---
+
+<BaseLayout pageTitle={pageTitle} description={description}>
+  <!-- Clean Sitemap Page with Theme System -->
+  <section style="background: var(--bg-secondary); padding: 3rem 0;">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="text-center">
+        <!-- Badge -->
+        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-6" 
+             style="background: var(--bg-tertiary); color: var(--color-primary); border: 1px solid var(--border-accent);">
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z" clip-rule="evenodd"></path>
+          </svg>
+          <span class="text-sm font-semibold">Sitemap</span>
+        </div>
+
+        <h1 class="text-4xl lg:text-5xl font-bold mb-6" 
+            style="color: var(--text-primary); font-family: var(--font-heading);">
+          Site Navigation
+        </h1>
+
+        <p class="text-lg max-w-3xl mx-auto mb-8" 
+           style="color: var(--text-secondary);">
+          {description}
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section style="background: var(--bg-primary); padding: 3rem 0;">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Articles Section -->
+        <div class="rounded-xl p-6 hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
+             style="background: var(--surface-card); border: 1px solid var(--border-default);">
+          <div class="flex items-center gap-3 mb-4">
+            <svg
+              class="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              style="color: var(--color-primary);"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+              ></path>
+            </svg>
+            <h3 class="text-lg font-bold" style="color: var(--text-primary);">Articles</h3>
+            <span class="ml-auto text-white text-xs font-semibold px-2 py-1 rounded-full" 
+                  style="background: var(--color-primary);">{allPosts.length}</span>
+          </div>
+          <div class="space-y-2">
+            <a href="/blog" class="block font-semibold transition-colors" 
+               style="color: var(--color-primary); transition: color var(--animation-duration) var(--animation-easing);"
+               onmouseover="this.style.color='var(--color-primary-dark)';"
+               onmouseout="this.style.color='var(--color-primary)';">
+              All Articles
+            </a>
+            {
+              allPosts.slice(0, 5).map((post) => (
+                <a href={`/blog/${post.id}`} class="block transition-colors truncate" 
+                   style="color: var(--text-secondary); transition: color var(--animation-duration) var(--animation-easing);"
+                   onmouseover="this.style.color='var(--color-primary)';"
+                   onmouseout="this.style.color='var(--text-secondary)';">
+                  {post.data.title}
+                </a>
+              ))
+            }
+            {
+              allPosts.length > 5 && (
+                <a href="/blog" class="block font-semibold transition-colors" 
+                   style="color: var(--color-primary); transition: color var(--animation-duration) var(--animation-easing);"
+                   onmouseover="this.style.color='var(--color-primary-dark)';"
+                   onmouseout="this.style.color='var(--color-primary)';">
+                  View all {allPosts.length} articles
+                </a>
+              )
+            }
+          </div>
+        </div>
+
+        <!-- Authors Section -->
+        <div class="rounded-xl p-6 hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
+             style="background: var(--surface-card); border: 1px solid var(--border-default);">
+          <div class="flex items-center gap-3 mb-4">
+            <svg
+              class="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              style="color: var(--color-primary);"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"
+              ></path>
+            </svg>
+            <h3 class="text-lg font-bold" style="color: var(--text-primary);">Authors</h3>
+            <span class="ml-auto text-white text-xs font-semibold px-2 py-1 rounded-full" 
+                  style="background: var(--color-primary);">{allAuthors.length}</span>
+          </div>
+          <div class="space-y-2">
+            <a href="/authors" class="block font-semibold transition-colors" 
+               style="color: var(--color-primary); transition: color var(--animation-duration) var(--animation-easing);"
+               onmouseover="this.style.color='var(--color-primary-dark)';"
+               onmouseout="this.style.color='var(--color-primary)';">
+              All Authors
+            </a>
+            {
+              allAuthors.map((author) => (
+                <a href={`/authors/${author.id}`} class="block transition-colors" 
+                   style="color: var(--text-secondary); transition: color var(--animation-duration) var(--animation-easing);"
+                   onmouseover="this.style.color='var(--color-primary)';"
+                   onmouseout="this.style.color='var(--text-secondary)';">
+                  {author.data.name}
+                </a>
+              ))
+            }
+          </div>
+        </div>
+
+        <!-- Categories Section -->
+        <div class="rounded-xl p-6 hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
+             style="background: var(--surface-card); border: 1px solid var(--border-default);">
+          <div class="flex items-center gap-3 mb-4">
+            <svg
+              class="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              style="color: var(--color-primary);"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
+              ></path>
+            </svg>
+            <h3 class="text-lg font-bold" style="color: var(--text-primary);">Categories</h3>
+            <span class="ml-auto text-white text-xs font-semibold px-2 py-1 rounded-full" 
+                  style="background: var(--color-primary);">{allCategories.length}</span>
+          </div>
+          <div class="space-y-2">
+            <a href="/categories" class="block font-semibold transition-colors" 
+               style="color: var(--color-primary); transition: color var(--animation-duration) var(--animation-easing);"
+               onmouseover="this.style.color='var(--color-primary-dark)';"
+               onmouseout="this.style.color='var(--color-primary)';">
+              All Categories
+            </a>
+            {
+              allCategories.map((category) => (
+                <a
+                  href={`/categories/${category.data.slug}`}
+                  class="block transition-colors"
+                  style="color: var(--text-secondary); transition: color var(--animation-duration) var(--animation-easing);"
+                  onmouseover="this.style.color='var(--color-primary)';"
+                  onmouseout="this.style.color='var(--text-secondary)';"
+                >
+                  {category.data.name}
+                </a>
+              ))
+            }
+          </div>
+        </div>
+
+        <!-- Tags Section -->
+        <div class="rounded-xl p-6 hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
+             style="background: var(--surface-card); border: 1px solid var(--border-default);">
+          <div class="flex items-center gap-3 mb-4">
+            <svg
+              class="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              style="color: var(--color-primary);"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"
+              ></path>
+            </svg>
+            <h3 class="text-lg font-bold" style="color: var(--text-primary);">Tags</h3>
+            <span class="ml-auto text-white text-xs font-semibold px-2 py-1 rounded-full" 
+                  style="background: var(--color-primary);">{allTags.length}</span>
+          </div>
+          <div class="space-y-2">
+            <a href="/tags" class="block font-semibold transition-colors" 
+               style="color: var(--color-primary); transition: color var(--animation-duration) var(--animation-easing);"
+               onmouseover="this.style.color='var(--color-primary-dark)';"
+               onmouseout="this.style.color='var(--color-primary)';">
+              All Tags
+            </a>
+            {
+              allTags.slice(0, 10).map((tag) => (
+                <a href={`/tags/${tag.id}`} class="block transition-colors" 
+                   style="color: var(--text-secondary); transition: color var(--animation-duration) var(--animation-easing);"
+                   onmouseover="this.style.color='var(--color-primary)';"
+                   onmouseout="this.style.color='var(--text-secondary)';">
+                  #{tag.data.name}
+                </a>
+              ))
+            }
+            {
+              allTags.length > 10 && (
+                <a href="/tags" class="block font-semibold transition-colors" 
+                   style="color: var(--color-primary); transition: color var(--animation-duration) var(--animation-easing);"
+                   onmouseover="this.style.color='var(--color-primary-dark)';"
+                   onmouseout="this.style.color='var(--color-primary)';">
+                  View all {allTags.length} tags
+                </a>
+              )
+            }
+          </div>
+        </div>
+
+        <!-- Pages Section -->
+        <div class="rounded-xl p-6 hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
+             style="background: var(--surface-card); border: 1px solid var(--border-default);">
+          <div class="flex items-center gap-3 mb-4">
+            <svg
+              class="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              style="color: var(--color-primary);"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+              ></path>
+            </svg>
+            <h3 class="text-lg font-bold" style="color: var(--text-primary);">Pages</h3>
+            <span class="ml-auto text-white text-xs font-semibold px-2 py-1 rounded-full" 
+                  style="background: var(--color-primary);">5</span>
+          </div>
+          <div class="space-y-2">
+            <a href="/" class="block transition-colors" 
+               style="color: var(--text-secondary); transition: color var(--animation-duration) var(--animation-easing);"
+               onmouseover="this.style.color='var(--color-primary)';"
+               onmouseout="this.style.color='var(--text-secondary)';">Home</a>
+            <a href="/blog" class="block transition-colors" 
+               style="color: var(--text-secondary); transition: color var(--animation-duration) var(--animation-easing);"
+               onmouseover="this.style.color='var(--color-primary)';"
+               onmouseout="this.style.color='var(--text-secondary)';">Blog</a>
+            <a href="/authors" class="block transition-colors" 
+               style="color: var(--text-secondary); transition: color var(--animation-duration) var(--animation-easing);"
+               onmouseover="this.style.color='var(--color-primary)';"
+               onmouseout="this.style.color='var(--text-secondary)';">Authors</a>
+            <a href="/categories" class="block transition-colors" 
+               style="color: var(--text-secondary); transition: color var(--animation-duration) var(--animation-easing);"
+               onmouseover="this.style.color='var(--color-primary)';"
+               onmouseout="this.style.color='var(--text-secondary)';">Categories</a>
+            <a href="/tags" class="block transition-colors" 
+               style="color: var(--text-secondary); transition: color var(--animation-duration) var(--animation-easing);"
+               onmouseover="this.style.color='var(--color-primary)';"
+               onmouseout="this.style.color='var(--text-secondary)';">Tags</a>
+          </div>
+        </div>
+
+        <!-- Legal Section -->
+        <div class="rounded-xl p-6 hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
+             style="background: var(--surface-card); border: 1px solid var(--border-default);">
+          <div class="flex items-center gap-3 mb-4">
+            <svg
+              class="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              style="color: var(--color-primary);"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+              ></path>
+            </svg>
+            <h3 class="text-lg font-bold" style="color: var(--text-primary);">Legal</h3>
+            <span class="ml-auto text-white text-xs font-semibold px-2 py-1 rounded-full" 
+                  style="background: var(--color-primary);">2</span>
+          </div>
+          <div class="space-y-2">
+            <a href="/legal/privacy" class="block transition-colors" 
+               style="color: var(--text-secondary); transition: color var(--animation-duration) var(--animation-easing);"
+               onmouseover="this.style.color='var(--color-primary)';"
+               onmouseout="this.style.color='var(--text-secondary)';">Privacy Policy</a>
+            <a href="/legal/terms" class="block transition-colors" 
+               style="color: var(--text-secondary); transition: color var(--animation-duration) var(--animation-easing);"
+               onmouseover="this.style.color='var(--color-primary)';"
+               onmouseout="this.style.color='var(--text-secondary)';">Terms of Service</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,476 @@
+---
+// Clean Blog Post Layout - Multi-Purpose Foundation
+import { formatDate } from "../core/blogLogic";
+import { getEntry } from "astro:content";
+import OptimizedImage from "../components/ui/OptimizedImage.astro";
+import BaseLayout from "./BaseLayout.astro";
+import Breadcrumb from "../components/navigation/Breadcrumb.astro";
+import { generateBreadcrumbs } from "../core/navigation/breadcrumbUtils";
+import RelatedPosts from "../components/ui/RelatedPosts.astro";
+import { Schema } from "../core/seo";
+import HorizontalAuthorCard from "../components/ui/HorizontalAuthorCard.astro";
+import TableOfContents from "../components/ui/TableOfContents.astro";
+
+const { frontmatter, schemaData, headings } = Astro.props;
+
+// Get data safely
+let author = null;
+let category = null;
+
+try {
+  if (frontmatter.author) {
+    const authorId =
+      typeof frontmatter.author === "string"
+        ? frontmatter.author
+        : frontmatter.author.id;
+    author = await getEntry("authors", authorId);
+  }
+  if (frontmatter.category) {
+    const categoryId =
+      typeof frontmatter.category === "string"
+        ? frontmatter.category
+        : frontmatter.category.id;
+    category = await getEntry("categories", categoryId);
+  }
+} catch (error) {
+  // Silently handle missing author/category data
+}
+
+const formattedDate = formatDate(frontmatter.pubDate);
+
+// Generate breadcrumbs
+const pageData = {
+  title: frontmatter.title,
+  category: category
+    ? { id: category.id, name: category.data.name, slug: category.data.slug }
+    : undefined,
+};
+const breadcrumbs = generateBreadcrumbs(`/blog/${frontmatter.title}`, pageData);
+
+// Process tags safely
+let tagData: any[] = [];
+if (
+  frontmatter.tags &&
+  Array.isArray(frontmatter.tags) &&
+  frontmatter.tags.length > 0
+) {
+  try {
+    tagData = await Promise.all(
+      frontmatter.tags.map(async (tagId: any) => {
+        try {
+          const tag = await getEntry("tags", tagId);
+          return tag || { id: tagId, data: { name: tagId } };
+        } catch (error) {
+          return { id: tagId, data: { name: tagId } };
+        }
+      }),
+    );
+  } catch (error) {
+    tagData = [];
+  }
+}
+---
+
+<BaseLayout
+  pageTitle={frontmatter.title}
+  description={frontmatter.description}
+  isArticle={true}
+  ogImage={frontmatter.image?.url}
+  ogImageAlt={frontmatter.image?.alt || frontmatter.title}
+>
+  {schemaData && <Schema item={schemaData} slot="head" />}
+
+  <!-- Video Content SEO Enhancement -->
+  <meta property="og:type" content="article" slot="head" />
+  <meta
+    property="article:author"
+    content={author?.data.name || "Author"}
+    slot="head"
+  />
+  <meta
+    property="article:published_time"
+    content={frontmatter.pubDate.toISOString()}
+    slot="head"
+  />
+  {
+    frontmatter.tags && (
+      <meta
+        property="article:tag"
+        content={frontmatter.tags.join(", ")}
+        slot="head"
+      />
+    )
+  }
+
+  <!-- Enhanced meta for video content -->
+  <meta name="twitter:card" content="summary_large_image" slot="head" />
+  <meta name="twitter:title" content={frontmatter.title} slot="head" />
+  <meta
+    name="twitter:description"
+    content={frontmatter.description}
+    slot="head"
+  />
+  {
+    frontmatter.image?.url && (
+      <meta name="twitter:image" content={frontmatter.image.url} slot="head" />
+    )
+  }
+
+  <!-- Preload critical featured image for LCP optimization -->
+  {
+    frontmatter.image?.url && (
+      <link
+        rel="preload"
+        as="image"
+        href={frontmatter.image.url}
+        fetchpriority="high"
+        slot="head"
+      />
+    )
+  }
+  <!-- Clean Article Layout -->
+  <div class="py-6 sm:py-8 lg:py-12 xl:py-16">
+    <!-- Main Content - No extra container since BaseLayout provides content-box -->
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <article>
+          <!-- Article Header -->
+          <div class="mb-6 sm:mb-8">
+            <!-- Breadcrumb - Hidden on mobile -->
+            <div class="hidden sm:block mb-4 sm:mb-6">
+              <Breadcrumb items={breadcrumbs} />
+            </div>
+
+
+
+            <!-- Article Title -->
+            <h1
+              class="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold mb-6 sm:mb-8 leading-tight"
+              style="color: var(--text-primary); font-family: var(--font-heading)"
+            >
+              {frontmatter.title}
+            </h1>
+
+            <!-- Article Meta - Clean Single Line Layout -->
+            <div class="flex flex-wrap items-center gap-4 text-sm mb-4">
+              <!-- Author Name -->
+              {
+                author && (
+                  <span
+                    class="font-semibold"
+                    style="color: var(--text-primary);"
+                  >
+                    {author.data.name}
+                  </span>
+                )
+              }
+
+              <!-- Separator -->
+              {
+                author && (
+                  <div
+                    class="w-1 h-1 rounded-full"
+                    style="background: var(--text-muted);"
+                  />
+                )
+              }
+
+              <!-- Date -->
+              <div
+                class="flex items-center gap-2"
+                style="color: var(--text-secondary);"
+              >
+                <svg
+                  class="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                  ></path>
+                </svg>
+                <time datetime={frontmatter.pubDate.toISOString()}>
+                  {formattedDate}
+                </time>
+              </div>
+
+              <!-- Separator -->
+              <div
+                class="w-1 h-1 rounded-full"
+                style="background: var(--text-muted);"
+              >
+              </div>
+
+              <!-- Read Time -->
+              <div
+                class="flex items-center gap-2"
+                style="color: var(--text-secondary);"
+              >
+                <svg
+                  class="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <span class="font-medium">5 min read</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Featured Image -->
+          {
+            frontmatter.image?.url && (
+              <div class="mb-6 sm:mb-8">
+                <div
+                  class="aspect-[16/9] sm:aspect-[2/1] lg:aspect-[16/9] overflow-hidden"
+                  style="border-radius: var(--radius-lg); box-shadow: var(--shadow-md)"
+                >
+                  <OptimizedImage
+                    src={frontmatter.image.url}
+                    alt={frontmatter.image.alt || frontmatter.title}
+                    width={830}
+                    height={467}
+                    priority={true}
+                    format="webp"
+                    quality={85}
+                    class="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+                  />
+                </div>
+              </div>
+            )
+          }
+
+          <!-- Table of Contents -->
+          {
+            headings && headings.length > 0 && (
+              <div class="mb-8">
+                <TableOfContents headings={headings} />
+              </div>
+            )
+          }
+
+          <!-- Article Content -->
+          <div class="pb-6 sm:pb-8 lg:pb-12">
+            <div
+              class="prose max-w-none video-content-optimized"
+              id="blog-content"
+            >
+              <slot />
+            </div>
+
+            <!-- Tags -->
+            {
+              tagData.length > 0 && (
+                <div
+                  class="mt-12 pt-8"
+                  style="border-top: 1px solid var(--border-light)"
+                >
+                  <div class="flex items-center gap-3 mb-4">
+                    <svg
+                      class="w-5 h-5"
+                      style="color: var(--color-primary)"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"
+                      />
+                    </svg>
+                    <h3
+                      class="text-lg font-bold"
+                      style="color: var(--text-primary); font-family: var(--font-heading)"
+                    >
+                      Tags
+                    </h3>
+                  </div>
+                  <div class="flex flex-wrap gap-3">
+                    {tagData.map((tag) => (
+                      <a
+                        href={`/tags/${tag.data.slug || tag.id}`}
+                        class="category-badge-accessible inline-flex items-center px-4 py-2 text-sm font-medium"
+                      >
+                        #{tag.data.name}
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              )
+            }
+          </div>
+        </article>
+
+        <!-- Horizontal Author Card - Deferred for better performance -->
+        {
+          author && (
+            <div class="mt-12">
+              <HorizontalAuthorCard authorId={author.id} server:defer>
+                <div slot="fallback" class="theme-card p-6">
+                  <div class="animate-pulse">
+                    <div class="flex items-center gap-4">
+                      <div class="w-20 h-20 bg-gray-200 rounded-full" />
+                      <div class="flex-1">
+                        <div class="h-4 bg-gray-200 rounded w-1/3 mb-2" />
+                        <div class="h-3 bg-gray-200 rounded w-2/3" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </HorizontalAuthorCard>
+            </div>
+          )
+        }
+
+        <!-- Related Posts - Deferred for better performance -->
+        <div class="mt-12">
+          <RelatedPosts
+            currentPostId={frontmatter.title}
+            category={frontmatter.category}
+            tags={frontmatter.tags}
+            limit={3}
+            server:defer
+          >
+            <div slot="fallback" class="theme-card p-6">
+              <div class="animate-pulse">
+                <div class="h-6 bg-gray-200 rounded w-1/4 mb-4"></div>
+                <div class="grid gap-4">
+                  {
+                    [1, 2, 3].map(() => (
+                      <div class="flex gap-4">
+                        <div class="w-20 h-16 bg-gray-200 rounded" />
+                        <div class="flex-1">
+                          <div class="h-4 bg-gray-200 rounded w-3/4 mb-2" />
+                          <div class="h-3 bg-gray-200 rounded w-1/2" />
+                        </div>
+                      </div>
+                    ))
+                  }
+                </div>
+              </div>
+            </div>
+          </RelatedPosts>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Video Content Optimization Styles -->
+  <style>
+    /* Video content optimizations */
+    .video-content-optimized {
+      /* Ensure videos are responsive within prose content */
+      --tw-prose-body: var(--text-primary);
+      --tw-prose-headings: var(--text-primary);
+    }
+
+    .video-content-optimized .youtube-embed-container {
+      /* Better spacing for videos in content */
+      margin: 2rem 0;
+      max-width: 100%;
+    }
+
+    /* Responsive video adjustments */
+    @media (max-width: 768px) {
+      .video-content-optimized .youtube-embed-container {
+        margin: 1.5rem 0;
+        border-radius: var(--radius-md);
+      }
+    }
+
+    /* Enhanced prose styling for video content */
+    .video-content-optimized h2 {
+      margin-top: 3rem;
+      margin-bottom: 1.5rem;
+      font-size: 1.875rem;
+      font-weight: 700;
+      line-height: 1.2;
+      color: var(--text-primary);
+    }
+
+    .video-content-optimized h3 {
+      margin-top: 2.5rem;
+      margin-bottom: 1rem;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    /* Better spacing around videos */
+    .video-content-optimized .youtube-embed-container + h2,
+    .video-content-optimized .youtube-embed-container + h3 {
+      margin-top: 3rem;
+    }
+
+    .video-content-optimized p + .youtube-embed-container {
+      margin-top: 2rem;
+    }
+
+    /* Checklist styling improvements */
+    .video-content-optimized ul li input[type="checkbox"] {
+      margin-right: 0.5rem;
+      accent-color: var(--color-primary);
+    }
+
+    .video-content-optimized ul li:has(input[type="checkbox"]) {
+      list-style: none;
+      margin-left: -1.5rem;
+      padding-left: 1.5rem;
+    }
+  </style>
+
+  <!-- SEO-Optimized External Link Handler & YouTube Auto-Embed -->
+  <!-- SEO-Optimized External Link Handler -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const currentDomain = window.location.hostname;
+      const blogContent = document.getElementById("blog-content");
+      if (!blogContent) return;
+
+      // Handle external links only
+      const links = blogContent.querySelectorAll("a[href]");
+
+      links.forEach((link) => {
+        const href = link.getAttribute("href");
+        if (!href || href.startsWith("#")) return;
+
+        try {
+          const url = new URL(href, window.location.origin);
+          const isExternal = url.hostname !== currentDomain;
+
+          if (isExternal) {
+            link.setAttribute("target", "_blank");
+            link.setAttribute("rel", "noopener noreferrer nofollow");
+
+            if (!link.querySelector(".external-link-icon")) {
+              const icon = document.createElement("span");
+              icon.className = "external-link-icon";
+              icon.innerHTML =
+                ' <svg style="display: inline; width: 12px; height: 12px; margin-left: 2px; opacity: 0.7;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>';
+              link.appendChild(icon);
+            }
+
+            const currentTitle = link.getAttribute("title") || "";
+            link.setAttribute(
+              "title",
+              currentTitle + (currentTitle ? " " : "") + "(Opens in new tab)",
+            );
+          }
+        } catch (e) {
+          // Silently continue for invalid URLs
+        }
+      });
+    });
+  </script>
+</BaseLayout>

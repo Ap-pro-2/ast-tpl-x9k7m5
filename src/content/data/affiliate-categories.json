@@ -1,0 +1,26 @@
+[
+  {
+    "id": "coffee-beans",
+    "name": "Coffee Beans",
+    "description": "Premium coffee beans from around the world",
+    "color": "var(--color-primary)"
+  },
+  {
+    "id": "brewing-equipment",
+    "name": "Brewing Equipment",
+    "description": "Coffee makers, grinders, and brewing tools",
+    "color": "var(--color-secondary)"
+  },
+  {
+    "id": "accessories",
+    "name": "Coffee Accessories",
+    "description": "Mugs, filters, scales, and coffee accessories",
+    "color": "var(--color-accent)"
+  },
+  {
+    "id": "books",
+    "name": "Coffee Books",
+    "description": "Books about coffee, brewing, and coffee culture",
+    "color": "var(--color-secondary)"
+  }
+]

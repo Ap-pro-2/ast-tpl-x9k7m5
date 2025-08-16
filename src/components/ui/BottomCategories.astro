@@ -1,0 +1,56 @@
+---
+/**
+ * Clean Categories Section - No Hardcoded Colors
+ */
+
+import { getCollection } from 'astro:content';
+import CategoryCircle from './CategoryCircle.astro';
+
+// Get categories for the circles (excluding uncategorized)
+const allCategories = await getCollection('categories');
+const topCategories = allCategories.filter(category => category.id !== 'uncategorized').slice(0, 5);
+---
+
+{topCategories.length > 0 && (
+  <section class="py-8 lg:py-12" style="background: var(--bg-primary);">
+    <div class="max-w-6xl mx-auto px-4">
+      <!-- Compact Section Header -->
+      <div class="text-center mb-8">
+        <h2 class="text-2xl lg:text-3xl font-bold text-gradient mb-2">
+          Browse Categories
+        </h2>
+        <p class="text-sm lg:text-base max-w-xl mx-auto" style="color: var(--text-secondary);">
+          Find exactly what you're looking for
+        </p>
+      </div>
+
+      <!-- Clean Category Grid -->
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-6">
+        {topCategories.map((category) => (
+          <a href={`/categories/${category.data.slug}`} class="group block">
+            <div class="theme-card hover-lift text-center p-4 sm:p-6 group-hover:scale-105 transition-all duration-300 h-full flex flex-col items-center justify-center min-h-[120px] sm:min-h-[140px]">
+              <!-- Category Icon -->
+              <div class="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-3 rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-shadow duration-300" style="background: var(--color-primary);">
+                <svg class="w-6 h-6 sm:w-8 sm:h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14-4H3m16 8H7m12 4H9"></path>
+                </svg>
+              </div>
+              
+              <!-- Category Name -->
+              <h3 class="text-sm sm:text-base font-bold group-hover:text-gradient transition-all duration-300 text-center line-clamp-2" style="color: var(--text-primary); font-family: var(--font-heading);">
+                {category.data.name}
+              </h3>
+              
+              <!-- Hover Arrow -->
+              <div class="mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300 text-gradient" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+              </div>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+)}

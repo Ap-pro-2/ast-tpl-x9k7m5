@@ -1,0 +1,37 @@
+---
+export const prerender = true;
+
+import { getSiteSettings, generateHomepageSEO } from "../core/blogLogic";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import HeroSection from "../components/ui/HeroSection.astro";
+import BottomCategories from "../components/ui/BottomCategories.astro";
+import FeaturedReviews from "../components/ui/FeaturedReviews.astro";
+
+import MagazineLayout from "../components/ui/MagazineLayout.astro";
+
+
+
+// Use core logic for data
+const settings = await getSiteSettings();
+const seoData = await generateHomepageSEO();
+---
+
+<BaseLayout pageTitle={seoData.pageTitle} description={seoData.description}>
+  {
+    settings.imageDomain && (
+      <link rel="preconnect" href={settings.imageDomain} slot="head" />
+    )
+  }
+
+  <!-- Hero Section with Magazine-Style Featured Articles -->
+  <HeroSection />
+
+  <!-- Featured Reviews Section -->
+  <FeaturedReviews />
+
+  <!-- Categories Navigation -->
+  <BottomCategories />
+
+  <!-- Latest Reviews - Magazine Layout -->
+  <MagazineLayout />
+</BaseLayout>

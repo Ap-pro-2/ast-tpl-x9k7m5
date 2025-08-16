@@ -1,0 +1,51 @@
+---
+/**
+ * Clean Circular Thumbnail Component - Theme System Only
+ */
+
+interface Props {
+  post: any;
+  size?: 'sm' | 'md' | 'lg';
+}
+
+const { post, size = 'md' } = Astro.props;
+
+const sizeClasses = {
+  sm: 'w-16 h-16',
+  md: 'w-20 h-20', 
+  lg: 'w-24 h-24'
+};
+
+const textSizes = {
+  sm: 'text-xs',
+  md: 'text-sm',
+  lg: 'text-base'
+};
+---
+
+<div class="flex flex-col items-center gap-3">
+  <a href={`/blog/${post.id}`} class="group">
+    <div class={`${sizeClasses[size]} rounded-full overflow-hidden theme-bg-secondary transition-transform group-hover:scale-105`}>
+      {post.data.image?.url ? (
+        <img 
+          src={post.data.image.url} 
+          alt={post.data.image.alt || post.data.title}
+          loading="lazy"
+          class="w-full h-full object-cover"
+        />
+      ) : (
+        <div class="w-full h-full bg-[var(--color-primary)] flex items-center justify-center">
+          <span class="text-white font-bold text-lg theme-font-heading">
+            {post.data.title.charAt(0)}
+          </span>
+        </div>
+      )}
+    </div>
+  </a>
+  
+  <div class="text-center max-w-[120px]">
+    <a href={`/blog/${post.id}`} class={`${textSizes[size]} font-medium theme-text-secondary hover:text-[var(--color-primary)] transition-colors line-clamp-2 leading-tight theme-font-body`}>
+      {post.data.title}
+    </a>
+  </div>
+</div>

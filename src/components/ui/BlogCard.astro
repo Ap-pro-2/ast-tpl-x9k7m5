@@ -1,0 +1,149 @@
+---
+/**
+ * Clean Blog Card Component - Ready for Custom Styling
+ * All logic preserved, styles stripped for fresh start
+ */
+
+import { formatDate } from '../../core/blogLogic';
+import { getEntry } from 'astro:content';
+
+interface Props {
+  post: any;
+}
+
+const { post } = Astro.props;
+
+// Get author and category data safely
+let author = null;
+let category = null;
+
+try {
+  if (post.data.author) {
+    const authorId = typeof post.data.author === 'string' ? post.data.author : post.data.author.id;
+    author = await getEntry('authors', authorId);
+  }
+  if (post.data.category) {
+    const categoryId = typeof post.data.category === 'string' ? post.data.category : post.data.category.id;
+    category = await getEntry('categories', categoryId);
+  }
+} catch (error) {
+  console.warn('Could not load author/category:', error);
+}
+
+// Handle tags properly - they can be strings or objects
+const tags = post.data.tags || [];
+const tagNames = tags.map(tag => {
+  if (typeof tag === 'string') return tag;
+  if (tag?.id) return tag.id;
+  if (tag?.data?.name) return tag.data.name;
+  return null;
+}).filter(Boolean);
+---
+
+<article class="blog-card">
+  
+  <!-- Post Image -->
+  {post.data.image?.url && (
+    <div class="blog-card-image">
+      <img 
+        src={post.data.image.url} 
+        alt={post.data.image.alt || post.data.title}
+        loading="lazy"
+      />
+      
+      <!-- Category Badge -->
+      {category && (
+        <div class="blog-card-category-badge">
+          <a href={`/categories/${category.data.slug}`}
+             class="category-badge"
+             aria-label={`View all posts in ${category.data.name} category`}>
+            {category.data.name}
+          </a>
+        </div>
+      )}
+    </div>
+  )}
+  
+  <!-- Post Content -->
+  <div class="blog-card-content">
+    
+    <!-- Category (if no image) -->
+    {!post.data.image?.url && category && (
+      <div class="blog-card-category">
+        <a href={`/categories/${category.data.slug}`}
+           class="category-badge"
+           aria-label={`View all posts in ${category.data.name} category`}>
+          {category.data.name}
+        </a>
+      </div>
+    )}
+    
+    <!-- Title -->
+    <h3 class="blog-card-title">
+      <a href={`/blog/${post.id}`} 
+         aria-label={`Read full article: ${post.data.title}`}>
+        {post.data.title}
+      </a>
+    </h3>
+    
+    <!-- Description -->
+    {post.data.description && (
+      <p class="blog-card-description">
+        {post.data.description}
+      </p>
+    )}
+    
+    <!-- Tags -->
+    {tagNames.length > 0 && (
+      <div class="blog-card-tags">
+        {tagNames.slice(0, 2).map((tag) => (
+          <a href={`/tags/${tag.toLowerCase().replace(/\s+/g, '-')}`}
+             class="tag-link"
+             aria-label={`View all posts tagged with ${tag}`}>
+            #{tag}
+          </a>
+        ))}
+        {tagNames.length > 2 && (
+          <a href="/tags"
+             class="tag-more"
+             aria-label={`View all tags - ${tagNames.length - 2} more tags available`}>
+            +{tagNames.length - 2}
+          </a>
+        )}
+      </div>
+    )}
+    
+    <!-- Meta Info & Button -->
+    <div class="blog-card-footer">
+      
+      <!-- Author Info -->
+      <div class="blog-card-author">
+        {author && (
+          <>
+            <div class="author-avatar">
+              {author.data.name.charAt(0)}
+            </div>
+            <div class="author-info">
+              <div class="author-name">
+                {author.data.name}
+              </div>
+              <time datetime={post.data.pubDate.toISOString()} class="post-date">
+                {formatDate(post.data.pubDate)}
+              </time>
+            </div>
+          </>
+        )}
+      </div>
+      
+      <!-- Read More Button -->
+      <a href={`/blog/${post.id}`} 
+         class="read-more-button"
+         aria-label={`Read the full article: ${post.data.title}`}>
+        <span>Read Article</span>
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+        </svg>
+      </a>
+    </div>
+  </div>
+</article>

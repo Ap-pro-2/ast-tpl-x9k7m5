@@ -1,0 +1,258 @@
+---
+/**
+ * Modern Professional Navigation - Clean UI/UX
+ */
+
+import { getAllPosts, getSiteSettings } from '../../core/blogLogic';
+import { getCollection } from 'astro:content';
+
+// Get site settings and data using your core logic
+const settings = await getSiteSettings();
+const allCategories = await getCollection('categories');
+const allPosts = await getAllPosts();
+
+// Get top 4 categories with posts (excluding uncategorized)
+const topCategories = allCategories.filter(category => category.id !== 'uncategorized').slice(0, 4);
+
+// Get 3 posts for each category
+const categoryPosts: Record<string, any[]> = {};
+for (const category of topCategories) {
+  const posts = allPosts.filter((post: any) => {
+    const postCategoryId = typeof post.data.category === 'string' ? post.data.category : post.data.category?.id;
+    return postCategoryId === category.id;
+  }).slice(0, 3);
+  categoryPosts[category.id] = posts;
+}
+---
+
+<header class="sticky top-0 z-50 backdrop-blur-lg border-b" style="background: rgba(255, 255, 255, 0.95); border-color: var(--border-default);">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <!-- Main Header Row -->
+    <div class="flex items-center justify-between py-4 lg:py-6">
+      <!-- Logo/Brand -->
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl flex items-center justify-center text-white shadow-lg hover:shadow-xl transition-shadow duration-300" style="background: var(--color-primary);">
+          <svg class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M2 5a2 2 0 012-2h8a2 2 0 012 2v10a2 2 0 002 2H4a2 2 0 01-2-2V5zm3 1h6v4H5V6zm6 6H5v2h6v-2z" clip-rule="evenodd"></path>
+          </svg>
+        </div>
+        <a href="/" class="text-xl lg:text-2xl font-bold hover:text-gradient transition-all duration-300" style="color: var(--text-primary); font-family: var(--font-heading);">
+          {settings.siteName}
+        </a>
+      </div>
+
+      <!-- Desktop Navigation -->
+      <nav class="hidden lg:flex items-center space-x-1">
+        {topCategories.map((category) => (
+          <div class="relative group">
+            <a
+              href={`/categories/${category.data.slug}`}
+              class="flex items-center gap-2 px-4 py-2 font-medium rounded-lg hover-lift transition-all duration-300"
+              style="color: var(--text-secondary);"
+            >
+              <span class="group-hover:text-gradient transition-colors duration-300">{category.data.name}</span>
+              <svg class="w-3 h-3 transition-transform group-hover:rotate-180 duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </a>
+
+            <!-- Modern Dropdown Menu -->
+            <div class="absolute top-full left-1/2 transform -translate-x-1/2 w-[700px] mt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 translate-y-2 group-hover:translate-y-0 z-50">
+              <div class="theme-card-glass rounded-2xl shadow-2xl overflow-hidden">
+                <div class="p-6">
+                  <!-- Category Header -->
+                  <div class="text-center mb-6">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full theme-card-glass mb-2">
+                      <div class="w-2 h-2 rounded-full" style="background: var(--color-primary);"></div>
+                      <span class="text-xs font-semibold text-gradient uppercase tracking-wider">
+                        {category.data.name}
+                      </span>
+                    </div>
+                    <h3 class="text-lg font-bold text-gradient">Latest Articles</h3>
+                  </div>
+                  
+                  <!-- Articles Grid -->
+                  <div class="grid grid-cols-3 gap-4 mb-6">
+                    {categoryPosts[category.id]?.map((post: any) => (
+                      <a
+                        href={`/blog/${post.id}`}
+                        class="theme-card hover-lift group/item cursor-pointer overflow-hidden"
+                      >
+                        {post.data.image?.url && (
+                          <div class="aspect-[16/10] overflow-hidden">
+                            <img
+                              src={post.data.image.url}
+                              alt={post.data.title}
+                              class="w-full h-full object-cover group-hover/item:scale-105 transition-transform duration-300"
+                            />
+                          </div>
+                        )}
+                        <div class="p-3">
+                          <h4 class="text-sm font-semibold line-clamp-2 leading-tight group-hover/item:text-gradient transition-colors duration-300" style="color: var(--text-primary); font-family: var(--font-heading);">
+                            {post.data.title}
+                          </h4>
+                          <div class="flex items-center gap-2 mt-2 text-xs" style="color: var(--text-muted);">
+                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                            </svg>
+                            <span>{new Date(post.data.pubDate).toLocaleDateString("en-US", { month: "short", day: "numeric" })}</span>
+                          </div>
+                        </div>
+                      </a>
+                    ))}
+                  </div>
+                  
+                  <!-- View All Button -->
+                  <div class="text-center">
+                    <a
+                      href={`/categories/${category.data.slug}`}
+                      class="btn-premium btn-primary text-sm"
+                    >
+                      <span>View All {category.data.name}</span>
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                      </svg>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+        
+        <!-- Blog Link -->
+        <a
+          href="/blog"
+          class="px-4 py-2 font-medium rounded-lg hover-lift transition-all duration-300 hover:text-gradient"
+          style="color: var(--text-secondary);"
+        >
+          All Articles
+        </a>
+      </nav>
+
+      <!-- Mobile Menu Toggle -->
+      <button id="mobile-menu-toggle" class="lg:hidden p-2 rounded-lg hover-lift transition-all duration-300" style="color: var(--text-secondary);">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Menu Overlay -->
+  <div id="mobile-overlay" class="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-40 hidden transition-opacity duration-300"></div>
+  
+  <!-- Clean Mobile Menu -->
+  <div id="mobile-sidebar" class="lg:hidden fixed top-0 right-0 h-full w-80 z-50 transform translate-x-full transition-transform duration-300 ease-in-out" style="background: var(--bg-primary); box-shadow: -10px 0 25px rgba(0, 0, 0, 0.15);">
+    <div class="h-full flex flex-col">
+      
+      <!-- Mobile Header -->
+      <div class="flex items-center justify-between p-6" style="border-bottom: 1px solid var(--border-default);">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl flex items-center justify-center text-white shadow-lg" style="background: var(--color-primary);">
+            <svg class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M2 5a2 2 0 012-2h8a2 2 0 012 2v10a2 2 0 002 2H4a2 2 0 01-2-2V5zm3 1h6v4H5V6zm6 6H5v2h6v-2z" clip-rule="evenodd"></path>
+            </svg>
+          </div>
+          <span class="text-xl font-bold" style="color: var(--text-primary); font-family: var(--font-heading);">{settings.siteName}</span>
+        </div>
+        
+        <button id="mobile-close" class="p-3 rounded-xl hover-lift transition-all duration-300" style="background: var(--bg-secondary); color: var(--text-secondary);">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+      
+      <!-- Mobile Navigation -->
+      <div class="flex-1 overflow-y-auto p-6">
+        <h3 class="text-lg font-bold mb-6" style="color: var(--text-primary); font-family: var(--font-heading);">Categories</h3>
+        
+        <div class="space-y-3">
+          {topCategories.map((category) => (
+            <a
+              href={`/categories/${category.data.slug}`}
+              class="flex items-center justify-between p-4 rounded-xl hover-lift transition-all duration-300 group"
+              style="background: var(--bg-secondary); border: 1px solid var(--border-light);"
+            >
+              <div class="flex items-center gap-4">
+                <div class="w-4 h-4 rounded-full" style="background: var(--color-primary);"></div>
+                <span class="text-base font-semibold group-hover:text-gradient transition-colors duration-300" style="color: var(--text-primary); font-family: var(--font-heading);">
+                  {category.data.name}
+                </span>
+              </div>
+              <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" style="color: var(--color-primary);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+              </svg>
+            </a>
+          ))}
+          
+          <a
+            href="/blog"
+            class="flex items-center justify-between p-4 rounded-xl hover-lift transition-all duration-300 group"
+            style="background: var(--bg-secondary); border: 1px solid var(--border-light);"
+          >
+            <div class="flex items-center gap-4">
+              <div class="w-4 h-4 rounded-full" style="background: var(--color-secondary);"></div>
+              <span class="text-base font-semibold group-hover:text-gradient transition-colors duration-300" style="color: var(--text-primary); font-family: var(--font-heading);">
+                All Articles
+              </span>
+            </div>
+            <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" style="color: var(--color-primary);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+          </a>
+        </div>
+      </div>
+      
+      <!-- Mobile Footer -->
+      <div class="p-6" style="border-top: 1px solid var(--border-default);">
+        <a
+          href="/"
+          class="btn-premium btn-primary w-full flex items-center justify-center gap-3 py-4"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+          </svg>
+          <span class="text-base font-semibold">Home</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile Menu Script -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const mobileToggle = document.getElementById('mobile-menu-toggle');
+    const mobileOverlay = document.getElementById('mobile-overlay');
+    const mobileSidebar = document.getElementById('mobile-sidebar');
+    const mobileClose = document.getElementById('mobile-close');
+
+    function openMobileMenu() {
+      mobileOverlay?.classList.remove('hidden');
+      mobileSidebar?.classList.remove('translate-x-full');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeMobileMenu() {
+      mobileOverlay?.classList.add('hidden');
+      mobileSidebar?.classList.add('translate-x-full');
+      document.body.style.overflow = '';
+    }
+
+    mobileToggle?.addEventListener('click', openMobileMenu);
+    mobileClose?.addEventListener('click', closeMobileMenu);
+    mobileOverlay?.addEventListener('click', closeMobileMenu);
+  });
+</script>
+
+<style>
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+</style>

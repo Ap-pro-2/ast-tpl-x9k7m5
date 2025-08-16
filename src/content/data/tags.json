@@ -1,0 +1,85 @@
+[
+  {
+    "id": "general",
+    "name": "General",
+    "description": "General topics and articles",
+    "color": "var(--text-muted)",
+    "slug": "general",
+    "seo": {
+      "title": "General Topics & Articles",
+      "description": "Explore general topics and articles covering a wide range of subjects and interesting insights.",
+      "keywords": ["general", "topics", "articles", "blog posts", "content", "insights"],
+      "ogImageAlt": "General topics and articles collection"
+    }
+  },
+  {
+    "id": "affiliate-marketing",
+    "name": "Affiliate Marketing",
+    "description": "Affiliate marketing strategies, tools, and product reviews",
+    "color": "var(--color-primary)",
+    "slug": "affiliate-marketing",
+    "seo": {
+      "title": "Affiliate Marketing Tools & Strategies",
+      "description": "Discover the best affiliate marketing tools, strategies, and product reviews to boost your affiliate income and grow your online business.",
+      "keywords": ["affiliate marketing", "affiliate tools", "affiliate programs", "commission", "affiliate income", "marketing strategies"],
+      "ogImage": "/images/seo/affiliate-marketing-og.jpg",
+      "ogImageAlt": "Affiliate marketing tools and strategies"
+    }
+  },
+  {
+    "id": "product-review",
+    "name": "Product Review",
+    "description": "In-depth reviews of digital marketing and business software products",
+    "color": "var(--color-secondary)",
+    "slug": "product-review",
+    "seo": {
+      "title": "Product Reviews & Software Comparisons",
+      "description": "Read honest, in-depth reviews of digital marketing tools, business software, and online services. Make informed decisions with our expert analysis.",
+      "keywords": ["product reviews", "software reviews", "tool comparisons", "honest reviews", "product analysis", "buying guide"],
+      "ogImage": "/images/seo/product-review-og.jpg",
+      "ogImageAlt": "Product reviews and software comparisons"
+    }
+  },
+  {
+    "id": "saas-tools",
+    "name": "SaaS Tools",
+    "description": "Software as a Service tools and cloud-based business solutions",
+    "color": "var(--color-accent)",
+    "slug": "saas-tools",
+    "seo": {
+      "title": "SaaS Tools & Cloud Software Reviews",
+      "description": "Discover the best SaaS tools and cloud-based software solutions. Expert reviews of subscription-based business tools and services.",
+      "keywords": ["saas tools", "cloud software", "subscription software", "online tools", "cloud services", "web applications"],
+      "ogImage": "/images/seo/saas-tools-og.jpg",
+      "ogImageAlt": "SaaS tools and cloud software reviews"
+    }
+  },
+  {
+    "id": "business-growth",
+    "name": "Business Growth",
+    "description": "Tools and strategies for scaling and growing your business",
+    "color": "var(--color-primary)",
+    "slug": "business-growth",
+    "seo": {
+      "title": "Business Growth Tools & Strategies",
+      "description": "Learn about tools and strategies for business growth. Expert advice on scaling your business and increasing revenue.",
+      "keywords": ["business growth", "scaling business", "growth strategies", "business expansion", "revenue growth", "business development"],
+      "ogImage": "/images/seo/business-growth-og.jpg",
+      "ogImageAlt": "Business growth tools and strategies"
+    }
+  },
+  {
+    "id": "productivity-tools",
+    "name": "Productivity Tools",
+    "description": "Software and tools to boost productivity and efficiency",
+    "color": "var(--color-secondary)",
+    "slug": "productivity-tools",
+    "seo": {
+      "title": "Productivity Tools & Efficiency Software",
+      "description": "Find the best productivity tools and efficiency software. Boost your team's performance with our expert tool reviews and recommendations.",
+      "keywords": ["productivity tools", "efficiency software", "time management", "task management", "team productivity", "workflow optimization"],
+      "ogImage": "/images/seo/productivity-tools-og.jpg",
+      "ogImageAlt": "Productivity tools and efficiency software"
+    }
+  }
+]

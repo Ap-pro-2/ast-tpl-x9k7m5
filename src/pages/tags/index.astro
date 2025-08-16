@@ -1,0 +1,157 @@
+---
+export const prerender = true;
+
+import {
+  getSiteSettings,
+  getPageData,
+  getTagsWithPostCounts,
+  shouldIndexPage,
+} from "../../core/blogLogic";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Breadcrumb from "../../components/navigation/Breadcrumb.astro";
+import { generateBreadcrumbs } from "../../core/navigation/breadcrumbUtils";
+
+const settings = await getSiteSettings();
+const pageData = await getPageData("all-tags");
+const breadcrumbs = generateBreadcrumbs("/tags");
+const tags = await getTagsWithPostCounts();
+
+// Check if this page should be indexed
+const shouldIndex = await shouldIndexPage("tags");
+
+// Enhanced SEO data
+const seoData = {
+  pageTitle: pageData?.seo?.title || "Coffee Tags & Topics | AstroPress Coffee",
+  description:
+    pageData?.seo?.description ||
+    "Discover all coffee tags and topics on AstroPress Coffee.",
+  keywords: pageData?.seo?.keywords || [
+    "coffee tags",
+    "coffee topics",
+    "brewing techniques",
+  ],
+  ogImage: pageData?.seo?.ogImage || "/images/seo/coffee-tags-main-og.jpg",
+  ogImageAlt: "Coffee tags and topics overview",
+  canonicalUrl: `${settings.siteUrl}/tags`,
+};
+---
+
+<BaseLayout
+  pageTitle={seoData.pageTitle}
+  description={seoData.description}
+  keywords={seoData.keywords}
+  ogImage={seoData.ogImage}
+  ogImageAlt={seoData.ogImageAlt}
+  canonicalUrl={seoData.canonicalUrl}
+  noindex={!shouldIndex}
+>
+  {
+    settings.imageDomain && (
+      <link rel="preconnect" href={settings.imageDomain} slot="head" />
+    )
+  }
+
+  <!-- Clean Tags Page with Theme System -->
+  <section style="background: var(--bg-secondary); padding: 3rem 0;">
+    <div class="max-w-7xl mx-auto px-4">
+      <Breadcrumb items={breadcrumbs} />
+
+      <div class="text-center">
+        <!-- Badge -->
+        <div
+          class="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-6"
+          style="background: var(--bg-tertiary); color: var(--color-primary); border: 1px solid var(--border-accent);"
+        >
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+            <path
+              fill-rule="evenodd"
+              d="M17.707 9.293a1 1 0 010 1.414l-7 7a1 1 0 01-1.414 0l-7-7A.997.997 0 012 10V5a3 3 0 013-3h5c.256 0 .512.098.707.293l7 7zM5 6a1 1 0 100-2 1 1 0 000 2z"
+              clip-rule="evenodd"></path>
+          </svg>
+          <span class="text-sm font-semibold">Tags</span>
+        </div>
+
+        <h1
+          class="text-4xl lg:text-5xl font-bold mb-6"
+          style="color: var(--text-primary); font-family: var(--font-heading);"
+        >
+          Explore Tags
+        </h1>
+
+        <p
+          class="text-lg max-w-3xl mx-auto mb-8"
+          style="color: var(--text-secondary);"
+        >
+          {
+            pageData?.description ||
+              "Discover articles by their unique tags and characteristics. Each tag represents a different aspect of the content."
+          }
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section style="background: var(--bg-primary); padding: 3rem 0;">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="flex flex-wrap gap-4 justify-center">
+        {
+          tags.map((tag) => (
+            <a
+              href={`/tags/${tag.id}`}
+              class="inline-flex items-center gap-3 px-6 py-3 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1"
+              style="background: var(--surface-card); border: 1px solid var(--border-default); transition: all var(--animation-duration) var(--animation-easing);"
+              onmouseover="this.style.background='var(--bg-tertiary)'; this.style.borderColor='var(--border-accent)'; this.style.transform='translateY(-4px)';"
+              onmouseout="this.style.background='var(--surface-card)'; this.style.borderColor='var(--border-default)'; this.style.transform='translateY(0)';"
+            >
+              <svg
+                class="w-4 h-4"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                style="color: var(--color-primary);"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M17.707 9.293a1 1 0 010 1.414l-7 7a1 1 0 01-1.414 0l-7-7A.997.997 0 012 10V5a3 3 0 013-3h5c.256 0 .512.098.707.293l7 7zM5 6a1 1 0 100-2 1 1 0 000 2z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+              <span class="font-semibold" style="color: var(--text-primary);">
+                #{tag.data.name}
+              </span>
+              <span
+                class="text-sm px-2 py-1 rounded-full font-medium"
+                style="background: var(--bg-tertiary); color: var(--text-secondary);"
+              >
+                {tag.postCount}
+              </span>
+            </a>
+          ))
+        }
+      </div>
+
+      <div class="mt-12 text-center">
+        <a
+          href="/blog"
+          class="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
+          style="background: var(--surface-card); border: 1px solid var(--border-default); color: var(--text-secondary); transition: all var(--animation-duration) var(--animation-easing);"
+          onmouseover="this.style.background='var(--bg-secondary)'; this.style.color='var(--text-primary)';"
+          onmouseout="this.style.background='var(--surface-card)'; this.style.color='var(--text-secondary)';"
+        >
+          <svg
+            class="w-4 h-4"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M15 19l-7-7 7-7"></path>
+          </svg>
+          <span>Back to All Articles</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,116 @@
+[
+  {
+    "id": "site-config",
+    "siteName": "AstroPress",
+    "siteTitle": "Digital Marketing Tools & Software Reviews",
+    "siteDescription": "Discover the best digital marketing tools and online business software. Expert reviews, comparisons, and guides to help you choose the right solutions for your business.",
+    "siteUrl": "https://yourdomain.com",
+    "author": "AstroPress Team",
+    "email": "hello@yourdomain.com",
+    "logo": "",
+    "imageDomain": "https://images.yourdomain.com",
+    "defaultOgImage": "",
+    "social": {
+      "twitter": "",
+      "github": "",
+      "linkedin": "",
+      "facebook": "",
+      "instagram": "",
+      "youtube": "",
+      "tiktok": "",
+      "discord": "",
+      "reddit": ""
+    },
+    "contact": {
+      "email": "hello@yourdomain.com",
+      "alias": "AstroPress Team"
+    },
+    "favicons": {
+      "icon32": "",
+      "icon16": "",
+      "appleTouchIcon": "",
+      "mainIcon": "",
+      "manifest": "/site.webmanifest"
+    },
+    "performance": {
+      "preconnectUrls": [
+        "https://fonts.googleapis.com",
+        "https://fonts.gstatic.com"
+      ]
+    },
+    "analytics": {
+      "googleAnalytics": ""
+    },
+    "rss": {
+      "enabled": true,
+      "itemsPerPage": 20
+    },
+    "disclaimer": {
+      "enabled": true,
+      "text": "This website may contain affiliate links. When you click on these links and make a purchase, we may earn a commission at no additional cost to you. We only recommend products and services we believe in and think will be valuable to our readers."
+    },
+    "themeSettings": {
+      "colors": {
+        "primary": "#2563EB",
+        "primaryLight": "#3B82F6",
+        "primaryDark": "#1D4ED8",
+        "secondary": "#60A5FA",
+        "accent": "#1E40AF",
+        "textPrimary": "#1F2937",
+        "textSecondary": "#4B5563",
+        "textMuted": "#6B7280",
+        "textAccent": "#2563EB",
+        "bgPrimary": "#FFFFFF",
+        "bgSecondary": "#F8FAFC",
+        "bgTertiary": "#F1F5F9",
+        "surfaceCard": "#FFFFFF",
+        "surfaceOverlay": "#F8FAFC",
+        "borderDefault": "#E2E8F0",
+        "borderLight": "#F1F5F9",
+        "borderAccent": "#2563EB"
+      },
+      "typography": {
+        "fontHeading": "\"Inter\", \"SF Pro Display\", \"Segoe UI\", system-ui, -apple-system, sans-serif",
+        "fontBody": "\"Inter\", \"SF Pro Text\", \"Segoe UI\", system-ui, -apple-system, sans-serif",
+        "fontMono": "\"JetBrains Mono\", \"SF Mono\", \"Cascadia Code\", \"Source Code Pro\", Menlo, Consolas, monospace",
+        "textXs": "0.75rem",
+        "textSm": "0.875rem",
+        "textBase": "1rem",
+        "textLg": "1.125rem",
+        "textXl": "1.25rem",
+        "text2xl": "1.5rem",
+        "text3xl": "1.875rem",
+        "text4xl": "2.25rem"
+      },
+      "spacing": {
+        "containerMaxWidth": "1200px",
+        "sectionPadding": "4rem 0",
+        "cardPadding": "1.5rem",
+        "buttonPadding": "0.5rem 1rem"
+      },
+      "borderRadius": {
+        "sm": "0.25rem",
+        "md": "0.375rem",
+        "lg": "0.5rem",
+        "xl": "0.75rem",
+        "full": "9999px"
+      },
+      "shadows": {
+        "sm": "0 1px 2px 0 rgb(0 0 0 / 0.05)",
+        "md": "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
+        "lg": "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
+        "xl": "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)"
+      },
+      "animation": {
+        "duration": "200ms",
+        "easing": "cubic-bezier(0.4, 0, 0.2, 1)"
+      },
+      "transitions": {
+        "pageStyle": "smooth",
+        "speed": "medium",
+        "loadingStyle": "progress",
+        "reducedMotion": "respect"
+      }
+    }
+  }
+]

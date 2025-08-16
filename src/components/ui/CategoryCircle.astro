@@ -1,0 +1,49 @@
+---
+/**
+ * Professional Category Circle Component
+ */
+
+import { getCollection } from 'astro:content';
+
+interface Props {
+  category: any;
+}
+
+const { category } = Astro.props;
+
+// Get a sample post from this category for the image
+const allPosts = await getCollection('blog');
+const categoryPosts = allPosts.filter(post => {
+  const postCategoryId = typeof post.data.category === 'string' ? post.data.category : post.data.category?.id;
+  return postCategoryId === category.id;
+});
+
+const samplePost = categoryPosts[0];
+---
+
+<div class="flex flex-col items-center gap-4 group">
+  <a href={`/categories/${category.data.slug}`} class="block">
+    <div class="w-24 h-24 rounded-full overflow-hidden shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-105 border-4" style="border-color: var(--color-primary);">
+      {samplePost?.data.image?.url ? (
+        <img 
+          src={samplePost.data.image.url} 
+          alt={category.data.name}
+          loading="lazy"
+          class="w-full h-full object-cover"
+        />
+      ) : (
+        <div class="w-full h-full flex items-center justify-center" style="background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));">
+          <span class="font-bold text-lg" style="color: var(--text-primary);">
+            {category.data.name.charAt(0)}
+          </span>
+        </div>
+      )}
+    </div>
+  </a>
+  
+  <div class="text-center max-w-[120px]">
+    <a href={`/categories/${category.data.slug}`} class="text-sm font-medium transition-colors duration-200 line-clamp-2 leading-tight" style="color: var(--text-secondary);" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color='var(--text-secondary)'">
+      {category.data.name}
+    </a>
+  </div>
+</div>
