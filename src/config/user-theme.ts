@@ -51,9 +51,49 @@ export const userTheme: ThemeConfig = jsonThemeSettings ? {
 
     // NEW: Semantic Colors (with fallbacks to existing colors)
     success: jsonThemeSettings.colors?.success || defaultTheme.colors.success,
+    successLight: jsonThemeSettings.colors?.successLight || defaultTheme.colors.successLight,
+    successDark: jsonThemeSettings.colors?.successDark || defaultTheme.colors.successDark,
+    successDarker: jsonThemeSettings.colors?.successDarker || defaultTheme.colors.successDarker,
     warning: jsonThemeSettings.colors?.warning || defaultTheme.colors.warning,
+    warningLight: jsonThemeSettings.colors?.warningLight || defaultTheme.colors.warningLight,
+    warningDark: jsonThemeSettings.colors?.warningDark || defaultTheme.colors.warningDark,
     error: jsonThemeSettings.colors?.error || defaultTheme.colors.error,
+    errorLight: jsonThemeSettings.colors?.errorLight || defaultTheme.colors.errorLight,
+    errorDark: jsonThemeSettings.colors?.errorDark || defaultTheme.colors.errorDark,
+    errorDarker: jsonThemeSettings.colors?.errorDarker || defaultTheme.colors.errorDarker,
     info: jsonThemeSettings.colors?.info || defaultTheme.colors.info,
+    infoLight: jsonThemeSettings.colors?.infoLight || defaultTheme.colors.infoLight,
+    infoDark: jsonThemeSettings.colors?.infoDark || defaultTheme.colors.infoDark,
+    
+    // Social Media Colors
+    socialTwitter: jsonThemeSettings.colors?.socialTwitter || defaultTheme.colors.socialTwitter,
+    socialLinkedin: jsonThemeSettings.colors?.socialLinkedin || defaultTheme.colors.socialLinkedin,
+    socialFacebook: jsonThemeSettings.colors?.socialFacebook || defaultTheme.colors.socialFacebook,
+    socialYoutube: jsonThemeSettings.colors?.socialYoutube || defaultTheme.colors.socialYoutube,
+    socialGithub: jsonThemeSettings.colors?.socialGithub || defaultTheme.colors.socialGithub,
+    
+    // Rating and Status Colors
+    ratingActive: jsonThemeSettings.colors?.ratingActive || defaultTheme.colors.ratingActive,
+    ratingInactive: jsonThemeSettings.colors?.ratingInactive || defaultTheme.colors.ratingInactive,
+    discount: jsonThemeSettings.colors?.discount || defaultTheme.colors.discount,
+    
+    // Glassmorphism and Effects
+    surfaceGlass: jsonThemeSettings.colors?.surfaceGlass || defaultTheme.colors.surfaceGlass,
+    surfaceGlassDark: jsonThemeSettings.colors?.surfaceGlassDark || defaultTheme.colors.surfaceGlassDark,
+    borderGlass: jsonThemeSettings.colors?.borderGlass || defaultTheme.colors.borderGlass,
+    borderGlassDark: jsonThemeSettings.colors?.borderGlassDark || defaultTheme.colors.borderGlassDark,
+    overlayLight: jsonThemeSettings.colors?.overlayLight || defaultTheme.colors.overlayLight,
+    overlayDark: jsonThemeSettings.colors?.overlayDark || defaultTheme.colors.overlayDark,
+    overlaySubtle: jsonThemeSettings.colors?.overlaySubtle || defaultTheme.colors.overlaySubtle,
+    overlayLoading: jsonThemeSettings.colors?.overlayLoading || defaultTheme.colors.overlayLoading,
+    effectShine: jsonThemeSettings.colors?.effectShine || defaultTheme.colors.effectShine,
+    colorFocusRing: jsonThemeSettings.colors?.colorFocusRing || defaultTheme.colors.colorFocusRing,
+    
+    // Subtle Background Colors for Semantic States
+    bgSuccessSubtle: jsonThemeSettings.colors?.bgSuccessSubtle || defaultTheme.colors.bgSuccessSubtle,
+    bgWarningSubtle: jsonThemeSettings.colors?.bgWarningSubtle || defaultTheme.colors.bgWarningSubtle,
+    bgErrorSubtle: jsonThemeSettings.colors?.bgErrorSubtle || defaultTheme.colors.bgErrorSubtle,
+    bgInfoSubtle: jsonThemeSettings.colors?.bgInfoSubtle || defaultTheme.colors.bgInfoSubtle,
 
     // NEW: Contextual Surface Colors (with fallbacks)
     surfaceRaised: jsonThemeSettings.colors?.surfaceRaised || jsonThemeSettings.colors.surfaceCard,

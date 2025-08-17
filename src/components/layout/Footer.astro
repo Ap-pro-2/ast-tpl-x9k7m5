@@ -11,52 +11,63 @@ const settings = await getSiteSettings();
 const currentYear = new Date().getFullYear();
 ---
 
-<!-- Clean Footer with Theme System -->
-<footer class="mt-20" style="background: var(--bg-secondary); border-top: 1px solid var(--border-default);">
-  <div class="max-w-7xl mx-auto px-4">
-    <div class="py-16">
+<!-- Premium Glassmorphism Footer -->
+<footer class="mt-16 relative overflow-hidden" 
+        style="background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+               border-top: 1px solid rgba(255, 255, 255, 0.2);">
+  
+  <!-- Premium Background Pattern -->
+  <div class="absolute inset-0" 
+       style="opacity: 0.03; 
+              background-image: 
+                radial-gradient(circle at 20% 80%, var(--color-primary) 0%, transparent 50%), 
+                radial-gradient(circle at 80% 20%, var(--color-accent) 0%, transparent 50%);"></div>
+  
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <div class="py-12 lg:py-16">
       
       <!-- Footer Content -->
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
         
-        <!-- Brand Section -->
+        <!-- Premium Brand Section -->
         <div class="lg:col-span-2">
-          <div class="flex items-center gap-3 mb-6">
-            <div class="w-8 h-8 rounded-lg flex items-center justify-center text-white" 
-                 style="background: var(--color-primary);">
-              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+          <div class="flex items-center gap-4 mb-6">
+            <div class="w-12 h-12 rounded-2xl flex items-center justify-center text-white shadow-lg" 
+                 style="background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+                        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2);">
+              <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M2 5a2 2 0 012-2h8a2 2 0 012 2v10a2 2 0 002 2H4a2 2 0 01-2-2V5zm3 1h6v4H5V6zm6 6H5v2h6v-2z" clip-rule="evenodd"></path>
               </svg>
             </div>
-            <h3 class="text-xl font-bold" style="color: var(--text-primary);">
+            <h3 class="text-2xl font-black" style="color: var(--text-primary); font-family: var(--font-heading);">
               {settings.siteName}
             </h3>
           </div>
-          <p class="max-w-md leading-relaxed" style="color: var(--text-secondary);">
+          <p class="max-w-md leading-relaxed text-base" style="color: var(--text-secondary); opacity: 0.9;">
             {settings.siteDescription}
           </p>
         </div>
         
-        <!-- Navigation Links -->
+        <!-- Premium Navigation Links -->
         <div>
-          <h4 class="text-sm font-bold uppercase tracking-wider mb-6" style="color: var(--text-primary);">Navigation</h4>
-          <ul class="space-y-4">
-            <li><a href="/" class="transition-colors" style="color: var(--text-secondary); transition: color var(--animation-duration) var(--animation-easing);" onmouseover="this.style.color='var(--color-primary)';" onmouseout="this.style.color='var(--text-secondary)';" aria-label="Go to homepage">Home</a></li>
-            <li><a href="/blog" class="transition-colors" style="color: var(--text-secondary); transition: color var(--animation-duration) var(--animation-easing);" onmouseover="this.style.color='var(--color-primary)';" onmouseout="this.style.color='var(--text-secondary)';" aria-label="View all blog articles">Articles</a></li>
-            <li><a href="/categories" class="transition-colors" style="color: var(--text-secondary); transition: color var(--animation-duration) var(--animation-easing);" onmouseover="this.style.color='var(--color-primary)';" onmouseout="this.style.color='var(--text-secondary)';" aria-label="Browse blog categories">Categories</a></li>
-            <li><a href="/authors" class="transition-colors" style="color: var(--text-secondary); transition: color var(--animation-duration) var(--animation-easing);" onmouseover="this.style.color='var(--color-primary)';" onmouseout="this.style.color='var(--text-secondary)';" aria-label="View all blog authors">Authors</a></li>
-            <li><a href="/tags" class="transition-colors" style="color: var(--text-secondary); transition: color var(--animation-duration) var(--animation-easing);" onmouseover="this.style.color='var(--color-primary)';" onmouseout="this.style.color='var(--text-secondary)';" aria-label="Browse blog tags">Tags</a></li>
+          <h4 class="text-sm font-black uppercase tracking-wider mb-6" style="color: var(--text-primary); font-family: var(--font-heading);">Navigation</h4>
+          <ul class="space-y-3">
+            <li><a href="/" class="font-semibold transition-all duration-300 hover:translate-x-1" style="color: var(--text-secondary);" onmouseover="this.style.color='var(--color-primary)';" onmouseout="this.style.color='var(--text-secondary)';" aria-label="Go to homepage">Home</a></li>
+            <li><a href="/blog" class="font-semibold transition-all duration-300 hover:translate-x-1" style="color: var(--text-secondary);" onmouseover="this.style.color='var(--color-primary)';" onmouseout="this.style.color='var(--text-secondary)';" aria-label="View all blog articles">Articles</a></li>
+            <li><a href="/categories" class="font-semibold transition-all duration-300 hover:translate-x-1" style="color: var(--text-secondary);" onmouseover="this.style.color='var(--color-primary)';" onmouseout="this.style.color='var(--text-secondary)';" aria-label="Browse blog categories">Categories</a></li>
+            <li><a href="/authors" class="font-semibold transition-all duration-300 hover:translate-x-1" style="color: var(--text-secondary);" onmouseover="this.style.color='var(--color-primary)';" onmouseout="this.style.color='var(--text-secondary)';" aria-label="View all blog authors">Authors</a></li>
+            <li><a href="/tags" class="font-semibold transition-all duration-300 hover:translate-x-1" style="color: var(--text-secondary);" onmouseover="this.style.color='var(--color-primary)';" onmouseout="this.style.color='var(--text-secondary)';" aria-label="Browse blog tags">Tags</a></li>
           </ul>
         </div>
         
-        <!-- Legal Links -->
+        <!-- Premium Legal Links -->
         <div>
-          <h4 class="text-sm font-bold uppercase tracking-wider mb-6" style="color: var(--text-primary);">Legal</h4>
-          <ul class="space-y-4">
-            <li><a href="/legal/privacy" class="transition-colors" style="color: var(--text-secondary); transition: color var(--animation-duration) var(--animation-easing);" onmouseover="this.style.color='var(--color-primary)';" onmouseout="this.style.color='var(--text-secondary)';" aria-label="Read our privacy policy">Privacy Policy</a></li>
-            <li><a href="/legal/terms" class="transition-colors" style="color: var(--text-secondary); transition: color var(--animation-duration) var(--animation-easing);" onmouseover="this.style.color='var(--color-primary)';" onmouseout="this.style.color='var(--text-secondary)';" aria-label="Read our terms of service">Terms of Service</a></li>
-            <li><a href="/sitemap" class="transition-colors" style="color: var(--text-secondary); transition: color var(--animation-duration) var(--animation-easing);" onmouseover="this.style.color='var(--color-primary)';" onmouseout="this.style.color='var(--text-secondary)';" aria-label="View site sitemap">Sitemap</a></li>
-            <li><a href="/rss.xml" class="transition-colors" style="color: var(--text-secondary); transition: color var(--animation-duration) var(--animation-easing);" onmouseover="this.style.color='var(--color-primary)';" onmouseout="this.style.color='var(--text-secondary)';" aria-label="Subscribe to RSS feed">RSS Feed</a></li>
+          <h4 class="text-sm font-black uppercase tracking-wider mb-6" style="color: var(--text-primary); font-family: var(--font-heading);">Legal</h4>
+          <ul class="space-y-3">
+            <li><a href="/legal/privacy" class="font-semibold transition-all duration-300 hover:translate-x-1" style="color: var(--text-secondary);" onmouseover="this.style.color='var(--color-primary)';" onmouseout="this.style.color='var(--text-secondary)';" aria-label="Read our privacy policy">Privacy Policy</a></li>
+            <li><a href="/legal/terms" class="font-semibold transition-all duration-300 hover:translate-x-1" style="color: var(--text-secondary);" onmouseover="this.style.color='var(--color-primary)';" onmouseout="this.style.color='var(--text-secondary)';" aria-label="Read our terms of service">Terms of Service</a></li>
+            <li><a href="/sitemap" class="font-semibold transition-all duration-300 hover:translate-x-1" style="color: var(--text-secondary);" onmouseover="this.style.color='var(--color-primary)';" onmouseout="this.style.color='var(--text-secondary)';" aria-label="View site sitemap">Sitemap</a></li>
+            <li><a href="/rss.xml" class="font-semibold transition-all duration-300 hover:translate-x-1" style="color: var(--text-secondary);" onmouseover="this.style.color='var(--color-primary)';" onmouseout="this.style.color='var(--text-secondary)';" aria-label="Subscribe to RSS feed">RSS Feed</a></li>
           </ul>
         </div>
       </div>

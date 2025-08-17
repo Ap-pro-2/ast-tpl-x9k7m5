@@ -278,6 +278,23 @@ const affiliateComparisons = defineCollection({
   }),
 });
 
+// Legal pages collection
+const legal = defineCollection({
+  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/legal" }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    pubDate: z.coerce.date().optional(),
+    seo: z.object({
+      title: z.string().optional(),
+      description: z.string().optional(),
+      keywords: z.array(z.string()).optional(),
+      ogImage: z.string().optional(),
+      canonical: z.string().optional(),
+    }).optional(),
+  }),
+});
+
 export const collections = {
   blog,
   authors,
@@ -287,5 +304,6 @@ export const collections = {
   pages,
   affiliateCategories,
   affiliateProducts,
-  affiliateComparisons
+  affiliateComparisons,
+  legal
 };

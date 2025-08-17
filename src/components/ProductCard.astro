@@ -80,8 +80,8 @@ const discountPercent =
         {
           discountPercent && (
             <span
-              class="bg-red-500 text-white text-xs font-bold px-2 py-1"
-              style="border-radius: var(--radius-md);"
+              class="text-white text-xs font-bold px-2 py-1"
+              style="background: var(--color-discount); border-radius: var(--radius-md);"
             >
               -{discountPercent}%
             </span>
@@ -121,7 +121,8 @@ const discountPercent =
             <div class="flex">
               {Array.from({ length: 5 }, (_, i) => (
                 <svg
-                  class={`w-4 h-4 ${i < Math.floor(rating) ? "text-yellow-400" : "text-gray-300"}`}
+                  class="w-4 h-4"
+                  style={`color: ${i < Math.floor(rating) ? "var(--color-rating-active)" : "var(--color-rating-inactive)"}`}
                   fill="currentColor"
                   viewBox="0 0 20 20"
                 >
@@ -222,8 +223,8 @@ const discountPercent =
                 style="background: color-mix(in srgb, var(--color-primary-accessible) 8%, transparent); border-radius: var(--radius-lg); border-left: 4px solid var(--color-primary-accessible);"
               >
                 <h5
-                  class="font-semibold mb-3 text-green-700 flex items-center gap-2"
-                  style="font-family: var(--font-heading);"
+                  class="font-semibold mb-3 flex items-center gap-2"
+                  style="color: var(--color-success-dark); font-family: var(--font-heading);"
                 >
                   <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                     <path
@@ -236,8 +237,8 @@ const discountPercent =
                 </h5>
                 <ul class="space-y-2">
                   {pros.map((pro) => (
-                    <li class="text-sm text-green-800 flex items-start gap-2">
-                      <span class="text-green-600 font-bold">•</span>
+                    <li class="text-sm flex items-start gap-2" style="color: var(--color-success-darker);">
+                      <span class="font-bold" style="color: var(--color-success);">•</span>
                       <span>{pro}</span>
                     </li>
                   ))}
@@ -251,8 +252,8 @@ const discountPercent =
                 style="background: color-mix(in srgb, var(--color-accent) 8%, transparent); border-radius: var(--radius-lg); border-left: 4px solid var(--color-accent);"
               >
                 <h5
-                  class="font-semibold mb-3 text-red-700 flex items-center gap-2"
-                  style="font-family: var(--font-heading);"
+                  class="font-semibold mb-3 flex items-center gap-2"
+                  style="color: var(--color-error-dark); font-family: var(--font-heading);"
                 >
                   <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                     <path
@@ -265,8 +266,8 @@ const discountPercent =
                 </h5>
                 <ul class="space-y-2">
                   {cons.map((con) => (
-                    <li class="text-sm text-red-800 flex items-start gap-2">
-                      <span class="text-red-600 font-bold">•</span>
+                    <li class="text-sm flex items-start gap-2" style="color: var(--color-error-darker);">
+                      <span class="font-bold" style="color: var(--color-error);">•</span>
                       <span>{con}</span>
                     </li>
                   ))}

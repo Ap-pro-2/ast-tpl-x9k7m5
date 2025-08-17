@@ -41,9 +41,49 @@ export interface ThemeConfig {
     
     // Semantic Colors (NEW)
     success: string;
+    successLight: string;
+    successDark: string;
+    successDarker: string;
     warning: string;
+    warningLight: string;
+    warningDark: string;
     error: string;
+    errorLight: string;
+    errorDark: string;
+    errorDarker: string;
     info: string;
+    infoLight: string;
+    infoDark: string;
+    
+    // Social Media Colors
+    socialTwitter: string;
+    socialLinkedin: string;
+    socialFacebook: string;
+    socialYoutube: string;
+    socialGithub: string;
+    
+    // Rating and Status Colors
+    ratingActive: string;
+    ratingInactive: string;
+    discount: string;
+    
+    // Glassmorphism and Effects
+    surfaceGlass: string;
+    surfaceGlassDark: string;
+    borderGlass: string;
+    borderGlassDark: string;
+    overlayLight: string;
+    overlayDark: string;
+    overlaySubtle: string;
+    overlayLoading: string;
+    effectShine: string;
+    colorFocusRing: string;
+    
+    // Subtle Background Colors for Semantic States
+    bgSuccessSubtle: string;
+    bgWarningSubtle: string;
+    bgErrorSubtle: string;
+    bgInfoSubtle: string;
     
     // Contextual Surface Colors (NEW)
     surfaceRaised: string;
@@ -175,9 +215,49 @@ export const defaultTheme: ThemeConfig = {
     
     // Semantic Colors (NEW)
     success: '#10B981',        // Emerald-500
+    successLight: '#34D399',   // Emerald-400
+    successDark: '#059669',    // Emerald-600
+    successDarker: '#047857',  // Emerald-700
     warning: '#F59E0B',        // Amber-500
+    warningLight: '#FBBF24',   // Amber-400
+    warningDark: '#D97706',    // Amber-600
     error: '#EF4444',          // Red-500
+    errorLight: '#F87171',     // Red-400
+    errorDark: '#DC2626',      // Red-600
+    errorDarker: '#B91C1C',    // Red-700
     info: '#3B82F6',           // Blue-500
+    infoLight: '#60A5FA',      // Blue-400
+    infoDark: '#2563EB',       // Blue-600
+    
+    // Social Media Colors
+    socialTwitter: '#1DA1F2',
+    socialLinkedin: '#0A66C2',
+    socialFacebook: '#1877F2',
+    socialYoutube: '#FF0000',
+    socialGithub: '#333333',
+    
+    // Rating and Status Colors
+    ratingActive: '#FBBF24',   // Amber-400
+    ratingInactive: '#D1D5DB', // Gray-300
+    discount: '#EF4444',       // Red-500
+    
+    // Glassmorphism and Effects
+    surfaceGlass: 'rgba(255, 255, 255, 0.8)',
+    surfaceGlassDark: 'rgba(0, 0, 0, 0.8)',
+    borderGlass: 'rgba(255, 255, 255, 0.2)',
+    borderGlassDark: 'rgba(255, 255, 255, 0.1)',
+    overlayLight: 'rgba(255, 255, 255, 0.8)',
+    overlayDark: 'rgba(0, 0, 0, 0.6)',
+    overlaySubtle: 'rgba(255, 255, 255, 0.1)',
+    overlayLoading: 'rgba(255, 255, 255, 0.8)',
+    effectShine: 'rgba(255, 255, 255, 0.2)',
+    colorFocusRing: 'rgba(59, 130, 246, 0.3)',
+    
+    // Subtle Background Colors for Semantic States
+    bgSuccessSubtle: 'rgba(16, 185, 129, 0.05)',
+    bgWarningSubtle: 'rgba(245, 158, 11, 0.05)',
+    bgErrorSubtle: 'rgba(239, 68, 68, 0.05)',
+    bgInfoSubtle: 'rgba(59, 130, 246, 0.05)',
     
     // Contextual Surface Colors (NEW)
     surfaceRaised: '#FFFFFF',  // White (same as surfaceCard)
@@ -406,9 +486,49 @@ export function generateThemeCSS(theme: ThemeConfig): string {
       
       /* Semantic Colors (NEW) */
       --color-success: ${theme.colors.success};
+      --color-success-light: ${theme.colors.successLight};
+      --color-success-dark: ${theme.colors.successDark};
+      --color-success-darker: ${theme.colors.successDarker};
       --color-warning: ${theme.colors.warning};
+      --color-warning-light: ${theme.colors.warningLight};
+      --color-warning-dark: ${theme.colors.warningDark};
       --color-error: ${theme.colors.error};
+      --color-error-light: ${theme.colors.errorLight};
+      --color-error-dark: ${theme.colors.errorDark};
+      --color-error-darker: ${theme.colors.errorDarker};
       --color-info: ${theme.colors.info};
+      --color-info-light: ${theme.colors.infoLight};
+      --color-info-dark: ${theme.colors.infoDark};
+      
+      /* Social Media Colors */
+      --color-social-twitter: ${theme.colors.socialTwitter};
+      --color-social-linkedin: ${theme.colors.socialLinkedin};
+      --color-social-facebook: ${theme.colors.socialFacebook};
+      --color-social-youtube: ${theme.colors.socialYoutube};
+      --color-social-github: ${theme.colors.socialGithub};
+      
+      /* Rating and Status Colors */
+      --color-rating-active: ${theme.colors.ratingActive};
+      --color-rating-inactive: ${theme.colors.ratingInactive};
+      --color-discount: ${theme.colors.discount};
+      
+      /* Glassmorphism and Effects */
+      --surface-glass: ${theme.colors.surfaceGlass};
+      --surface-glass-dark: ${theme.colors.surfaceGlassDark};
+      --border-glass: ${theme.colors.borderGlass};
+      --border-glass-dark: ${theme.colors.borderGlassDark};
+      --overlay-light: ${theme.colors.overlayLight};
+      --overlay-dark: ${theme.colors.overlayDark};
+      --overlay-subtle: ${theme.colors.overlaySubtle};
+      --overlay-loading: ${theme.colors.overlayLoading};
+      --effect-shine: ${theme.colors.effectShine};
+      --color-focus-ring: ${theme.colors.colorFocusRing};
+      
+      /* Semantic State Backgrounds */
+      --bg-success-subtle: ${theme.colors.bgSuccessSubtle};
+      --bg-warning-subtle: ${theme.colors.bgWarningSubtle};
+      --bg-error-subtle: ${theme.colors.bgErrorSubtle};
+      --bg-info-subtle: ${theme.colors.bgInfoSubtle};
       
       /* Contextual Surface Colors (NEW) */
       --surface-raised: ${theme.colors.surfaceRaised};

@@ -11,6 +11,7 @@ import { getCollection } from "astro:content";
 const settings = await getSiteSettings();
 const allPosts = await getAllPosts();
 const allCategories = await getCollection("categories");
+const allAuthors = await getCollection("authors");
 
 // Get featured posts dynamically
 const featuredPosts = allPosts
@@ -25,76 +26,101 @@ const displayPosts = featuredPosts.length > 0 ? featuredPosts : allPosts.slice(0
 const topCategories = allCategories.filter(category => category.id !== 'uncategorized').slice(0, 2);
 ---
 
-<!-- Mobile-Optimized Magazine-Style Tech Blog Hero -->
-<section class="relative overflow-hidden" 
-         style="background: var(--bg-primary); padding: var(--space-xl) 0 var(--space-3xl) 0;">
+<!-- Modern Tech Magazine Hero with Mobile-First Responsive Design -->
+<section class="relative overflow-hidden hero-section" 
+         style="background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%); 
+                padding: var(--space-lg) 0 var(--space-2xl) 0; 
+                min-height: 60vh;">
   
-  <!-- Background Pattern -->
-  <div class="absolute inset-0 opacity-5" 
-       style="background-image: radial-gradient(circle at 25% 25%, var(--color-primary) 0%, transparent 50%), 
-                               radial-gradient(circle at 75% 75%, var(--color-accent) 0%, transparent 50%);"></div>
+  <!-- Mobile-Optimized Background Pattern -->
+  <div class="absolute inset-0" 
+       style="opacity: 0.08; 
+              background-image: 
+                radial-gradient(circle at 20% 30%, var(--color-primary) 0%, transparent 35%), 
+                radial-gradient(circle at 80% 70%, var(--color-accent) 0%, transparent 35%),
+                radial-gradient(circle at 60% 20%, rgba(139, 92, 246, 0.3) 0%, transparent 25%);"></div>
+  
+  <!-- Mobile-Optimized Floating Elements -->
+  <div class="absolute inset-0 pointer-events-none hidden sm:block">
+    <div class="absolute top-16 left-6 w-20 h-20 sm:w-32 sm:h-32 sm:left-10 sm:top-20 rounded-full blur-xl animate-pulse" style="background: var(--overlay-light); animation-delay: 0s;"></div>
+    <div class="absolute top-32 right-12 w-16 h-16 sm:w-24 sm:h-24 sm:right-20 sm:top-40 rounded-full blur-xl animate-pulse" style="background: var(--overlay-light); animation-delay: 2s;"></div>
+    <div class="absolute bottom-20 left-1/4 w-24 h-24 sm:w-40 sm:h-40 sm:bottom-32 rounded-full blur-xl animate-pulse" style="background: var(--overlay-light); animation-delay: 4s;"></div>
+  </div>
   
   <div class="max-w-7xl mx-auto relative z-10 px-4 sm:px-6 lg:px-8">
     
-    <!-- Mobile-Optimized Hero Header -->
-    <div class="text-center stagger-children mb-8 sm:mb-12 lg:mb-16">
+    <!-- Mobile-First Hero Header -->
+    <div class="text-center stagger-children mb-6 sm:mb-8 lg:mb-12">
       
-      <!-- Dynamic Eyebrow Text - Mobile Optimized -->
-      <div class="inline-flex items-center gap-2 rounded-full mb-4 sm:mb-6 transition-all duration-300 hover:scale-105"
-           style="padding: var(--space-xs) var(--space-md); 
-                  background: var(--surface-floating); 
-                  border: 1px solid var(--border-light);
+      <!-- Mobile-Optimized Glassmorphism Badge -->
+      <div class="inline-flex items-center gap-2 sm:gap-3 rounded-full mb-4 sm:mb-6 transition-all duration-500 hover:scale-105 interactive-lift"
+           style="padding: var(--space-xs) var(--space-md) var(--space-sm) var(--space-lg); 
+                  background: rgba(255, 255, 255, 0.1); 
+                  border: 1px solid rgba(255, 255, 255, 0.2);
                   backdrop-filter: blur(20px);
-                  box-shadow: var(--shadow-sm);">
-        <div class="w-2 h-2 rounded-full animate-pulse" style="background: var(--color-success);"></div>
-        <span class="font-semibold text-gradient uppercase tracking-wider text-xs sm:text-sm">
-          {settings.author || "Expert"} Reviews
+                  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.3);">
+        <div class="w-2 h-2 sm:w-3 sm:h-3 rounded-full animate-pulse" style="background: var(--color-success);"></div>
+        <span class="font-bold text-gradient uppercase tracking-wider text-xs sm:text-sm lg:text-base"
+              style="background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
+                     -webkit-background-clip: text;
+                     -webkit-text-fill-color: transparent;
+                     background-clip: text;">
+          {settings.author || "Expert"} Tech Reviews
         </span>
+        <div class="w-2 h-2 sm:w-3 sm:h-3 rounded-full animate-pulse" style="background: var(--color-info); animation-delay: 1s;"></div>
       </div>
       
-      <!-- Mobile-Optimized Main Headline -->
-      <h1 class="text-gradient text-shadow-soft max-w-5xl mx-auto text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight mb-4 sm:mb-6"
-          style="font-family: var(--font-heading);">
-        {settings.siteTitle || `${settings.siteName} Blog`}
+      <!-- Mobile-Optimized Display Headline -->
+      <h1 class="max-w-5xl mx-auto text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-black leading-tight mb-4 sm:mb-6 scale-in px-2 sm:px-0"
+          style="font-family: var(--font-heading);
+                 background: linear-gradient(135deg, var(--text-primary) 0%, var(--color-primary) 50%, var(--color-accent) 100%);
+                 -webkit-background-clip: text;
+                 -webkit-text-fill-color: transparent;
+                 background-clip: text;
+                 text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                 letter-spacing: -0.01em;">
+        {settings.siteTitle || `${settings.siteName} Tech Hub`}
       </h1>
       
       <!-- Mobile-Optimized Subheadline -->
-      <p class="max-w-3xl mx-auto mb-6 sm:mb-8 text-sm sm:text-base lg:text-lg leading-relaxed px-4 sm:px-0" 
+      <p class="max-w-3xl mx-auto mb-6 sm:mb-8 text-sm sm:text-base lg:text-lg leading-relaxed px-4 sm:px-0 fade-in" 
          style="color: var(--text-secondary); 
-                font-family: var(--font-body);">
+                font-family: var(--font-body);
+                text-wrap: balance;
+                opacity: 0.9;">
         {settings.siteDescription}
       </p>
       
-      <!-- Mobile-Optimized CTA Buttons -->
+      <!-- Mobile-First CTA Buttons -->
       {displayPosts.length > 0 && (
-        <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center px-4 sm:px-0">
+        <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center px-4 sm:px-0 max-w-md sm:max-w-none mx-auto">
           <a href={`/blog/${displayPosts[0].id}`} 
-             class="w-full sm:w-auto inline-flex items-center justify-center gap-3 font-semibold rounded-xl transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-4 text-sm sm:text-base"
-             style="padding: var(--space-sm) var(--space-lg);
-                    background: var(--color-primary);
-                    color: var(--bg-primary);
-                    box-shadow: var(--shadow-md);
-                    focus-ring-color: var(--state-focus);"
-             onmouseover="this.style.background='var(--color-primary-accessible)'; this.style.transform='translateY(-2px) scale(1.05)'; this.style.boxShadow='var(--shadow-lg)';"
-             onmouseout="this.style.background='var(--color-primary)'; this.style.transform='scale(1)'; this.style.boxShadow='var(--shadow-md)';">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+             class="btn-premium btn-primary group w-full sm:w-auto inline-flex items-center justify-center gap-2 sm:gap-3 font-bold rounded-xl sm:rounded-2xl transition-all duration-500 hover:scale-105 focus:outline-none focus:ring-4 text-sm sm:text-base transform"
+             style="padding: var(--space-sm) var(--space-lg) var(--space-md) var(--space-xl);
+                    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+                    color: white;
+                    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15), 0 2px 8px rgba(0, 0, 0, 0.1);
+                    border: 1px solid rgba(255, 255, 255, 0.2);
+                    position: relative;
+                    overflow: hidden;
+                    min-height: 48px;">
+            <svg class="w-4 h-4 sm:w-5 sm:h-5 group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
             </svg>
-            Read Latest
+            <span class="truncate">Read Latest Review</span>
           </a>
           {topCategories.length > 0 && (
             <a href={`/categories/${topCategories[0].data.slug}`} 
-               class="w-full sm:w-auto inline-flex items-center justify-center gap-3 font-semibold rounded-xl transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-4 text-sm sm:text-base"
-               style="padding: var(--space-sm) var(--space-lg);
-                      background: var(--surface-raised);
+               class="btn-premium btn-secondary group w-full sm:w-auto inline-flex items-center justify-center gap-2 sm:gap-3 font-bold rounded-xl sm:rounded-2xl transition-all duration-500 hover:scale-105 focus:outline-none focus:ring-4 text-sm sm:text-base"
+               style="padding: var(--space-sm) var(--space-lg) var(--space-md) var(--space-xl);
+                      background: rgba(255, 255, 255, 0.1);
                       color: var(--text-primary);
-                      border: 2px solid var(--border-default);
-                      box-shadow: var(--shadow-sm);
-                      focus-ring-color: var(--state-focus);"
-               onmouseover="this.style.background='var(--state-hover)'; this.style.borderColor='var(--color-primary)'; this.style.transform='translateY(-2px) scale(1.05)'; this.style.boxShadow='var(--shadow-md)';"
-               onmouseout="this.style.background='var(--surface-raised)'; this.style.borderColor='var(--border-default)'; this.style.transform='scale(1)'; this.style.boxShadow='var(--shadow-sm)';">
-              {topCategories[0].data.name}
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      border: 2px solid rgba(255, 255, 255, 0.2);
+                      backdrop-filter: blur(20px);
+                      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+                      min-height: 48px;">
+              <span class="font-semibold truncate">{topCategories[0].data.name}</span>
+              <svg class="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform duration-300 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
               </svg>
             </a>
@@ -103,49 +129,46 @@ const topCategories = allCategories.filter(category => category.id !== 'uncatego
       )}
     </div>
 
-    <!-- Mobile-Optimized Featured Article -->
+    <!-- Modern Featured Article with Glassmorphism -->
     {displayPosts[0] && (
-      <div id="featured" class="mb-8 sm:mb-12 lg:mb-16">
-        <article class="group cursor-pointer rounded-xl overflow-hidden transition-all duration-500 sm:hover:scale-[1.02]"
-                 style="background: var(--surface-raised);
-                        border: 1px solid var(--border-light);
-                        box-shadow: var(--shadow-lg);
-                        transition: all var(--animation-duration) var(--animation-easing);"
-                 onmouseover="this.style.boxShadow='var(--shadow-xl)'; this.style.borderColor='var(--color-primary)'; this.style.background='var(--surface-floating)';"
-                 onmouseout="this.style.boxShadow='var(--shadow-lg)'; this.style.borderColor='var(--border-light)'; this.style.background='var(--surface-raised)';">
+      <div id="featured" class="mb-12 sm:mb-16 lg:mb-20">
+        <article class="group cursor-pointer rounded-3xl overflow-hidden transition-all duration-700 hover:scale-[1.02] interactive-lift"
+                 style="background: rgba(255, 255, 255, 0.8);
+                        backdrop-filter: blur(20px);
+                        border: 1px solid rgba(255, 255, 255, 0.3);
+                        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1), 0 8px 24px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+                        position: relative;
+                        overflow: hidden;">
           <a href={`/blog/${displayPosts[0].id}`} class="block">
             
-            <!-- Mobile-Optimized Article Header -->
-            <div class="p-4 sm:p-6 lg:p-8">
-              <!-- Mobile-Optimized Premium Badges -->
-              <div class="flex flex-wrap items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
-                <div class="inline-flex items-center rounded-full transition-all duration-300 hover:scale-105"
-                     style="padding: var(--space-xs) var(--space-sm);
-                            gap: var(--space-xs);
-                            background: var(--surface-floating);
-                            border: 1px solid var(--border-light);
-                            backdrop-filter: blur(20px);">
-                  <svg class="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: var(--color-info);">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                  </svg>
-                  <span class="font-semibold text-xs sm:text-sm" 
-                        style="color: var(--text-secondary);">
+            <!-- Modern Article Header with Premium Styling -->
+            <div class="p-6 sm:p-8 lg:p-10">
+              <!-- Enhanced Premium Badge System -->
+              <div class="flex flex-wrap items-center gap-3 sm:gap-4 mb-6 sm:mb-8">
+                <div class="inline-flex items-center rounded-full transition-all duration-500 hover:scale-110 group/badge"
+                     style="padding: var(--space-sm) var(--space-md);
+                            gap: var(--space-sm);
+                            background: var(--surface-glass);
+                            border: 1px solid var(--border-glass);
+                            backdrop-filter: blur(20px);
+                            box-shadow: 0 4px 16px var(--color-primary-light);">
+                  <div class="w-2 h-2 rounded-full animate-pulse" style="background: var(--color-primary);"></div>
+                  <span class="font-bold text-sm sm:text-base" style="color: var(--color-primary-dark);">
                     {new Date(displayPosts[0].data.pubDate).toLocaleDateString("en-US", { month: "long", year: "numeric" })}
                   </span>
                 </div>
                 
                 {displayPosts[0].data.featured && (
-                  <div class="inline-flex items-center rounded-full transition-all duration-300 hover:scale-105"
-                       style="padding: var(--space-xs) var(--space-sm);
-                              gap: var(--space-xs);
+                  <div class="inline-flex items-center rounded-full transition-all duration-500 hover:scale-110 hover:rotate-3 group/featured"
+                       style="padding: var(--space-sm) var(--space-md);
+                              gap: var(--space-sm);
                               background: var(--color-warning);
-                              color: var(--bg-primary);
-                              box-shadow: var(--shadow-md);">
-                    <svg class="w-3 h-3 sm:w-4 sm:h-4" fill="currentColor" viewBox="0 0 20 20">
+                              color: white;
+                              box-shadow: 0 8px 32px var(--color-warning-light), 0 2px 8px var(--color-warning-light);">
+                    <svg class="w-4 h-4 group-hover/featured:rotate-180 transition-transform duration-500" fill="currentColor" viewBox="0 0 20 20">
                       <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
                     </svg>
-                    <span class="font-bold uppercase tracking-wider text-xs" 
-                          style="font-size: var(--text-fluid-xs);">Featured</span>
+                    <span class="font-black uppercase tracking-wider text-sm">Featured Review</span>
                   </div>
                 )}
               </div>
@@ -171,14 +194,26 @@ const topCategories = allCategories.filter(category => category.id !== 'uncatego
                   <div class="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 text-sm" 
                        style="color: var(--text-muted);">
                     <div class="flex items-center gap-3">
-                      <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-bold text-sm sm:text-base">
-                        {(settings.author || "Expert").charAt(0).toUpperCase()}
+                      <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center text-white font-bold text-sm sm:text-base" style="background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);">
+                        {(() => {
+                          const authorId = typeof displayPosts[0].data.author === 'string' ? displayPosts[0].data.author : displayPosts[0].data.author?.id;
+                          const author = allAuthors.find(a => a.id === authorId);
+                          return (author?.data.name || settings.author || "Expert").charAt(0).toUpperCase();
+                        })()}
                       </div>
                       <div>
-                        <div class="font-semibold text-sm sm:text-base" style="color: var(--text-primary);">
-                          {settings.author || settings.contact?.alias || "Author"}
-                        </div>
-                        <div class="text-xs sm:text-sm">{settings.siteName} Team</div>
+                        {(() => {
+                          const authorId = typeof displayPosts[0].data.author === 'string' ? displayPosts[0].data.author : displayPosts[0].data.author?.id;
+                          const author = allAuthors.find(a => a.id === authorId);
+                          return (
+                            <>
+                              <div class="font-semibold text-sm sm:text-base" style="color: var(--text-primary);">
+                                {author?.data.name || settings.author || "Author"}
+                              </div>
+                              <div class="text-xs sm:text-sm">{settings.siteName} Team</div>
+                            </>
+                          );
+                        })()}
                       </div>
                     </div>
                     <div class="hidden sm:block h-4 w-px" style="background: var(--border-default);"></div>
@@ -212,9 +247,9 @@ const topCategories = allCategories.filter(category => category.id !== 'uncatego
                     </div>
                     
                     <!-- Responsive Floating Decorative Elements -->
-                    <div class="absolute -top-2 -right-2 w-4 h-4 sm:w-6 sm:h-6 lg:w-8 lg:h-8 rounded-full bg-gradient-to-br from-pink-400 to-red-500 animate-pulse"></div>
-                    <div class="absolute -bottom-2 -left-2 w-3 h-3 sm:w-4 sm:h-4 lg:w-6 lg:h-6 rounded-full bg-gradient-to-br from-blue-400 to-cyan-500 animate-pulse" style="animation-delay: 0.5s;"></div>
-                    <div class="absolute top-1/2 -left-3 sm:-left-4 lg:-left-6 w-2 h-2 sm:w-3 sm:h-3 lg:w-4 lg:h-4 rounded-full bg-gradient-to-br from-green-400 to-emerald-500 animate-pulse" style="animation-delay: 1s;"></div>
+                    <div class="absolute -top-2 -right-2 w-4 h-4 sm:w-6 sm:h-6 lg:w-8 lg:h-8 rounded-full animate-pulse" style="background: var(--color-error);"></div>
+                    <div class="absolute -bottom-2 -left-2 w-3 h-3 sm:w-4 sm:h-4 lg:w-6 lg:h-6 rounded-full animate-pulse" style="background: var(--color-info); animation-delay: 0.5s;"></div>
+                    <div class="absolute top-1/2 -left-3 sm:-left-4 lg:-left-6 w-2 h-2 sm:w-3 sm:h-3 lg:w-4 lg:h-4 rounded-full animate-pulse" style="background: var(--color-success); animation-delay: 1s;"></div>
                   </div>
                 </div>
               </div>
@@ -224,8 +259,8 @@ const topCategories = allCategories.filter(category => category.id !== 'uncatego
       </div>
     )}
 
-    <!-- Mobile-Optimized Category Showcase -->
-    <div class="grid gap-6 sm:gap-8 lg:grid-cols-2 lg:gap-12">
+    <!-- Mobile-First Category Showcase -->
+    <div class="space-y-8 sm:space-y-10 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-12">
       {topCategories.map((category) => {
         // Filter posts that actually belong to this category
         const categoryPosts = allPosts.filter(post => {
@@ -234,23 +269,32 @@ const topCategories = allCategories.filter(category => category.id !== 'uncatego
         }).slice(0, 1); // Get just 1 post per category
         
         return categoryPosts.length > 0 ? (
-          <div class="group">
-            <!-- Mobile-Optimized Category Header -->
-            <div class="flex items-center justify-between mb-4 sm:mb-6">
-              <div class="flex items-center gap-2 sm:gap-3">
-                <div class="w-2 h-2 sm:w-3 sm:h-3 rounded-full" style="background: var(--color-primary);"></div>
-                <h3 class="font-bold text-gradient uppercase tracking-wider text-sm sm:text-base lg:text-lg"
-                    style="font-family: var(--font-heading);">
+          <div class="group w-full space-y-4">
+            <!-- Mobile-First Category Header -->
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2 sm:gap-3 min-w-0 flex-1 overflow-hidden">
+                <div class="w-2 h-2 sm:w-3 sm:h-3 rounded-full animate-pulse flex-shrink-0" style="background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);"></div>
+                <h3 class="font-bold uppercase tracking-wider text-xs sm:text-sm lg:text-base"
+                    style="font-family: var(--font-heading);
+                           background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
+                           -webkit-background-clip: text;
+                           -webkit-text-fill-color: transparent;
+                           background-clip: text;
+                           overflow: hidden;
+                           text-overflow: ellipsis;
+                           white-space: nowrap;
+                           max-width: 100%;">
                   {category.data.name}
                 </h3>
               </div>
               <a href={`/categories/${category.data.slug}`} 
-                 class="font-semibold hover:text-gradient transition-all duration-300 flex items-center gap-1 sm:gap-2 text-xs sm:text-sm"
+                 class="font-semibold hover:text-gradient transition-all duration-300 flex items-center gap-1 text-xs sm:text-sm flex-shrink-0 whitespace-nowrap"
                  style="color: var(--color-primary);"
                  onmouseover="this.style.color='var(--color-primary-accessible)'; this.style.transform='translateX(2px)';"
                  onmouseout="this.style.color='var(--color-primary)'; this.style.transform='translateX(0)';">
-                View All
-                <svg class="w-3 h-3 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <span class="hidden sm:inline">View All</span>
+                <span class="sm:hidden">All</span>
+                <svg class="w-3 h-3 transition-transform duration-300 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                 </svg>
               </a>

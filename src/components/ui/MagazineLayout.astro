@@ -4,45 +4,90 @@
  */
 
 import { getAllPosts, getSiteSettings } from "../../core/blogLogic";
+import { getCollection } from "astro:content";
 
 // Get all posts data using your core logic
 const allPosts = await getAllPosts();
 const settings = await getSiteSettings();
+const allAuthors = await getCollection('authors');
 const featuredPosts = allPosts.slice(0, 6); // Limit to 6 articles
 ---
 
-<section class="py-8 lg:py-12" style="background: var(--bg-primary);">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <!-- Clean Section Header -->
-        <div class="text-center mb-8 lg:mb-10">
-            <!-- Dynamic Eyebrow Text -->
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full mb-4 theme-card-glass">
-                <div class="w-2 h-2 rounded-full animate-pulse" style="background: var(--color-primary);"></div>
-                <span class="text-xs font-semibold text-gradient uppercase tracking-wider">
-                    Latest Reviews
-                </span>
+<section class="relative overflow-hidden py-12 lg:py-16 pb-8" 
+         style="background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);">
+  
+  <!-- Unified Background Pattern -->
+  <div class="absolute inset-0" 
+       style="opacity: 0.08; 
+              background-image: 
+                radial-gradient(circle at 20% 30%, var(--color-primary) 0%, transparent 35%), 
+                radial-gradient(circle at 80% 70%, var(--color-accent) 0%, transparent 35%),
+                radial-gradient(circle at 60% 20%, rgba(139, 92, 246, 0.3) 0%, transparent 25%);"></div>
+  
+  <!-- Premium Floating Elements -->
+  <div class="absolute inset-0 pointer-events-none">
+    <div class="absolute top-24 left-20 w-28 h-28 rounded-full bg-gradient-to-br from-rose-400/6 to-pink-400/6 blur-xl animate-pulse" style="animation-delay: 2s;"></div>
+    <div class="absolute bottom-40 right-24 w-36 h-36 rounded-full bg-gradient-to-br from-amber-400/5 to-orange-400/5 blur-xl animate-pulse" style="animation-delay: 4s;"></div>
+  </div>
+  
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <!-- Optimized Section Header -->
+        <div class="text-center mb-8 lg:mb-12 stagger-children">
+            
+            <!-- Premium Glassmorphism Eyebrow -->
+            <div class="inline-flex items-center gap-3 rounded-full mb-6 transition-all duration-500 hover:scale-105 interactive-lift"
+                 style="padding: var(--space-sm) var(--space-lg);
+                        background: rgba(255, 255, 255, 0.1);
+                        border: 1px solid rgba(255, 255, 255, 0.2);
+                        backdrop-filter: blur(20px);
+                        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.3);">
+              <div class="w-3 h-3 rounded-full animate-pulse bg-gradient-to-r from-violet-400 to-purple-500"></div>
+              <span class="font-bold text-gradient uppercase tracking-wider text-sm"
+                    style="background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-accent) 100%);
+                           -webkit-background-clip: text;
+                           -webkit-text-fill-color: transparent;
+                           background-clip: text;">
+                Latest Reviews
+              </span>
+              <div class="w-3 h-3 rounded-full animate-pulse bg-gradient-to-r from-pink-400 to-rose-500" style="animation-delay: 1s;"></div>
             </div>
             
-            <!-- Main Headline -->
-            <h2 class="text-2xl lg:text-3xl font-bold text-gradient mb-2">
+            <!-- Optimized Section Headline -->
+            <h2 class="text-3xl lg:text-4xl font-black leading-tight mb-4 scale-in"
+                style="font-family: var(--font-heading);
+                       background: linear-gradient(135deg, var(--text-primary) 0%, var(--color-primary) 50%, var(--color-accent) 100%);
+                       -webkit-background-clip: text;
+                       -webkit-text-fill-color: transparent;
+                       background-clip: text;
+                       text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                       letter-spacing: -0.02em;
+                       text-wrap: balance;">
                 Recent Articles
             </h2>
             
-            <!-- Description -->
-            <p class="text-sm lg:text-base max-w-2xl mx-auto leading-relaxed" style="color: var(--text-secondary);">
-                Discover our latest insights and expert reviews
+            <!-- Premium Description -->
+            <p class="max-w-3xl mx-auto text-body-large leading-relaxed fade-in" 
+               style="color: var(--text-secondary);
+                      font-family: var(--font-body);
+                      text-wrap: balance;
+                      opacity: 0.9;">
+                Discover our latest insights, comprehensive reviews, and expert analysis of cutting-edge business tools
             </p>
         </div>
 
-        <!-- Clean Magazine-Style Articles -->
-        <div class="space-y-8">
+        <!-- Premium Magazine-Style Articles -->
+        <div class="space-y-8 lg:space-y-10 stagger-children">
             {featuredPosts.map((post) => (
-                <article class="theme-card hover-lift group/article cursor-pointer overflow-hidden">
+                <article class="theme-card-elevated interactive-lift group/article cursor-pointer overflow-hidden transition-all duration-700 hover:scale-[1.01]"
+                         style="background: var(--surface-floating);
+                                backdrop-filter: blur(20px);
+                                border: 1px solid rgba(255, 255, 255, 0.15);
+                                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08), 0 4px 16px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.2);">
                     <div class="flex flex-col lg:flex-row h-full">
-                        <!-- Clean Image Section -->
+                        <!-- Premium Image Section -->
                         <div class="lg:w-2/5 relative">
                             <a href={`/blog/${post.id}`} class="block">
-                                <div class="aspect-[16/10] lg:aspect-[4/3] overflow-hidden relative">
+                                <div class="aspect-[16/10] sm:aspect-[4/3] overflow-hidden relative">
                                     {post.data.image?.url ? (
                                         <img
                                             src={post.data.image.url}
@@ -60,48 +105,67 @@ const featuredPosts = allPosts.slice(0, 6); // Limit to 6 articles
                                 </div>
                             </a>
                             
-                            <!-- Dynamic Category Badge -->
+                            <!-- Premium Glassmorphism Category Badge -->
                             {post.data.category && (
-                                <div class="absolute top-4 left-4">
-                                    <div class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-white text-xs font-semibold shadow-lg" style="background: var(--color-primary);">
-                                        <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                                <div class="absolute top-4 left-4 transition-all duration-500 hover:scale-110">
+                                    <div class="inline-flex items-center gap-2 px-3 py-2 rounded-full text-white text-sm font-bold shadow-lg"
+                                         style="background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+                                                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2), 0 4px 16px rgba(0, 0, 0, 0.1);">
+                                        <svg class="w-4 h-4 group-hover:rotate-180 transition-transform duration-500" fill="currentColor" viewBox="0 0 20 20">
                                             <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
                                         </svg>
-                                        {typeof post.data.category === 'string' ? post.data.category : post.data.category?.name || 'Article'}
+                                        <span class="font-black uppercase tracking-wider truncate max-w-[120px]">
+                                            {typeof post.data.category === 'string' ? post.data.category : post.data.category?.name || 'Article'}
+                                        </span>
                                     </div>
                                 </div>
                             )}
                         </div>
 
-                        <!-- Clean Content Section -->
-                        <div class="lg:w-3/5 p-6 lg:p-8 flex flex-col justify-center">
+                        <!-- Premium Content Section -->
+                        <div class="lg:w-3/5 p-6 lg:p-8 xl:p-10 flex flex-col justify-center">
                             <a href={`/blog/${post.id}`} class="block h-full flex flex-col">
-                                <!-- Article Title -->
-                                <h3 class="text-2xl lg:text-3xl font-bold leading-tight mb-4 group-hover/article:text-gradient transition-all duration-300 flex-grow" style="color: var(--text-primary); font-family: var(--font-heading);">
+                                <!-- Optimized Article Title -->
+                                <h3 class="text-xl lg:text-2xl font-bold leading-tight mb-4 group-hover/article:text-gradient transition-all duration-300 flex-grow" 
+                                    style="color: var(--text-primary); 
+                                           font-family: var(--font-heading);
+                                           text-wrap: balance;">
                                     {post.data.title}
                                 </h3>
 
-                                <!-- Article Description -->
+                                <!-- Optimized Article Description -->
                                 {post.data.description && (
-                                    <p class="text-sm lg:text-base leading-relaxed mb-6 line-clamp-3 flex-grow" style="color: var(--text-secondary);">
+                                    <p class="text-base lg:text-lg leading-relaxed mb-6 line-clamp-2 flex-grow" 
+                                       style="color: var(--text-secondary);
+                                              font-family: var(--font-body);
+                                              opacity: 0.9;">
                                         {post.data.description}
                                     </p>
                                 )}
 
-                                <!-- Clean Meta Info -->
-                                <div class="flex items-center justify-between mt-auto pt-4" style="border-top: 1px solid var(--border-light);">
-                                    <div class="flex items-center gap-4 text-xs" style="color: var(--text-muted);">
+                                <!-- Mobile-Optimized Meta Info -->
+                                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 mt-auto pt-3 sm:pt-4" style="border-top: 1px solid var(--border-light);">
+                                    <div class="flex items-center gap-3 sm:gap-4 text-xs sm:text-sm" style="color: var(--text-muted);">
                                         <div class="flex items-center gap-2">
-                                            <div class="w-6 h-6 rounded-full flex items-center justify-center text-white text-xs font-bold" style="background: var(--color-primary);">
-                                                {(settings.author || "A").charAt(0).toUpperCase()}
-                                            </div>
-                                            <span class="font-semibold" style="color: var(--text-primary);">{settings.author || "Author"}</span>
+                                            {(() => {
+                                                const authorId = typeof post.data.author === 'string' ? post.data.author : post.data.author?.id;
+                                                const author = allAuthors.find(a => a.id === authorId);
+                                                const authorName = author?.data.name || settings.author || "Author";
+                                                return (
+                                                    <>
+                                                        <div class="w-6 h-6 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-white text-xs sm:text-sm font-bold flex-shrink-0" style="background: var(--color-primary);">
+                                                            {authorName.charAt(0).toUpperCase()}
+                                                        </div>
+                                                        <span class="font-semibold truncate" style="color: var(--text-primary);">{authorName}</span>
+                                                    </>
+                                                );
+                                            })()}
                                         </div>
-                                        <div class="flex items-center gap-2">
-                                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <div class="flex items-center gap-1 sm:gap-2">
+                                            <svg class="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                                             </svg>
-                                            <time datetime={post.data.pubDate.toISOString()}>
+                                            <time datetime={post.data.pubDate.toISOString()} class="truncate">
                                                 {new Date(post.data.pubDate).toLocaleDateString("en-US", {
                                                     month: "short",
                                                     day: "numeric",
@@ -111,10 +175,10 @@ const featuredPosts = allPosts.slice(0, 6); // Limit to 6 articles
                                         </div>
                                     </div>
                                     
-                                    <!-- Clean Read More -->
-                                    <div class="flex items-center gap-1 text-xs font-semibold group-hover/article:text-gradient transition-all duration-300" style="color: var(--color-primary);">
+                                    <!-- Mobile-Optimized Read More -->
+                                    <div class="flex items-center gap-1 sm:gap-2 text-xs sm:text-sm font-semibold group-hover/article:text-gradient transition-all duration-300 flex-shrink-0" style="color: var(--color-primary);">
                                         <span>Read Article</span>
-                                        <svg class="w-4 h-4 group-hover/article:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <svg class="w-3 h-3 sm:w-4 sm:h-4 group-hover/article:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                                         </svg>
                                     </div>
@@ -126,12 +190,19 @@ const featuredPosts = allPosts.slice(0, 6); // Limit to 6 articles
             ))}
         </div>
 
-        <!-- Clean All Articles Button -->
-        <div class="text-center mt-12">
-            <a href="/blog" class="btn-premium btn-primary inline-flex items-center gap-2">
-                <span>All Articles</span>
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+        <!-- Premium Glassmorphism CTA Button -->
+        <div class="text-center mt-8 lg:mt-10">
+            <a href="/blog" class="btn-premium btn-primary inline-flex items-center gap-3 group transition-all duration-500 hover:scale-105 interactive-lift"
+               style="padding: var(--space-md) var(--space-xl);
+                      background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+                      color: white;
+                      border-radius: var(--radius-xl);
+                      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15), 0 4px 16px rgba(0, 0, 0, 0.1);
+                      border: 1px solid rgba(255, 255, 255, 0.2);">
+                <span class="font-bold text-base">Explore All Articles</span>
+                <svg class="w-5 h-5 group-hover:translate-x-2 group-hover:scale-110 transition-all duration-300" 
+                     fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
                 </svg>
             </a>
         </div>
