@@ -108,7 +108,7 @@ export default defineConfig({
   },
 
   image: {
-    domains: ["images.supplementcrew.com"],
+    domains: ["images.domain.com"],
     service: {
       entrypoint: 'astro/assets/services/cloudflare'
     }

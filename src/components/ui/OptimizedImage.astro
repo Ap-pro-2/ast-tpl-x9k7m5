@@ -42,11 +42,11 @@ const getCloudflareOptimizedSrc = (
     if (!isExternalImage) return originalSrc;
 
     // Check if this is your custom domain for R2
-    const isCustomDomain = originalSrc.includes("images.supplementcrew.com");
+    const isCustomDomain = originalSrc.includes("images.domain.com");
 
     if (isCustomDomain) {
         // Use Cloudflare's /cdn-cgi/image/ transformation through main domain
-        // Format: https://supplementcrew.com/cdn-cgi/image/width=400,quality=85,format=webp/https://images.supplementcrew.com/image.webp
+
         const options = [
             `width=${targetWidth}`,
             `height=${targetHeight}`,
@@ -55,7 +55,7 @@ const getCloudflareOptimizedSrc = (
             `format=${format}`,
         ].join(",");
 
-        return `https://supplementcrew.com/cdn-cgi/image/${options}/${originalSrc}`;
+        return `https://domain.com/cdn-cgi/image/${options}/${originalSrc}`;
     }
 
     // For other external images, use as-is
@@ -70,7 +70,7 @@ const generateCloudflareResponsiveSrcSet = (
     if (!isExternalImage) return undefined;
 
     // Check if this is your custom domain for R2
-    const isCustomDomain = originalSrc.includes("images.supplementcrew.com");
+    const isCustomDomain = originalSrc.includes("images.domain.com");
 
     if (!isCustomDomain) return undefined;
 
@@ -94,7 +94,7 @@ const generateCloudflareResponsiveSrcSet = (
                 `quality=${quality}`,
                 `format=${format}`,
             ].join(",");
-            return `https://supplementcrew.com/cdn-cgi/image/${options}/${originalSrc} ${w}w`;
+            return `https://domain.com/cdn-cgi/image/${options}/${originalSrc} ${w}w`;
         })
         .join(", ");
 };
